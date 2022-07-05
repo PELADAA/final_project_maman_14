@@ -1,22 +1,13 @@
-#include <stdio.h>
-#include <stdlib.h>
+
+#include "assembler.h"
 
 
-#define LINE_MAX 80 
-#define SPACE 32
-#define TAB 11
-#define NEW_LINE 10
-#define END '\0'
-#define ASTERISK '*'
 
 
-struct  node
-{
-    char arr[LINE_MAX];
-    int value;
-    struct node* next;
-};
-typedef struct node node_t;
+
+
+
+
 
 void printlist(node_t* head) {
     node_t* temporary = head;
@@ -58,18 +49,28 @@ int main(int argc, char** argv) {
     char temp_char = '0';
     int j;
     char c;
+    int macro_flag = 0;
     int counter = 0;
 
+    char* file_name_holder = malloc(sizeof(char) * BUFFER_MAX);
+    char* text_line = malloc(sizeof(char) * BUFFER_MAX);
+    file_name_holder = argv[1];
+
+    //printf("string after dot is %s\n", strrchr(file_name_holder, DOT));
+
+    strncat(file_name_holder, AS_SUFFIX, SUFFIX_LENGTH);
+
+    printf("file created is: %s\n", file_name_holder);
 
 
-    FILE* file_to_read = fopen(argv[1], "r");
+
+
+
+    FILE* file_to_read = fopen(file_name_holder, "r");
     FILE* file_to_write = fopen("precompiler_output.txt", "w");
+    FILE* macro_table = fopen("macro_table.txt", "w");
 
     printf("---------------------------------------------------------------\n");
-    printf("Input file is %s\n", argv[1]);
-
-
-
 
 
     if (file_to_read == NULL || file_to_write == NULL) {
@@ -77,8 +78,13 @@ int main(int argc, char** argv) {
         return -1;
     }
 
+    printf("Input file is %s\n", file_name_holder);
 
-    while ((c = fgetc(file_to_read)) != EOF) {
+
+    //printf(strstr(file_to_read, "macro"));
+    //printf(strstr(fgets(,10,file_to_read), "macro")); search macro on every line
+
+    while ((text_line = fgets(text_line, 80, file_to_read)) != NULL) {
         /*if (c == NEW_LINE) {
             c = SPACE;
         }
@@ -88,11 +94,38 @@ int main(int argc, char** argv) {
             fprintf(stderr, "Warning: Illegal character replaced with * \n");
         }
         */
+        if (strstr(text_line, "endmacro") != NULL) {
+            printf("%s %d\n", "End macro found in line:", counter);
+            macro_flag = 0;
+
+
+        }
+        else if (strstr(text_line, "macro") != NULL) {
+            printf("%s %d\n", "Macro found in line:", counter);
+            macro_flag = 1;
+            fprintf(macro_table, "macro in line %d is: %s", counter, (strstr(text_line, "macro")) + 6); //TODO handle spaces
+
+
+
+        }
+
+        if (macro_flag == 1)
+            fputs(text_line, macro_table);
+
+
         counter++;
-        fputc(c, file_to_write);
+
+        /*if (strstr(text_line, "endmacro") != NULL) {
+            printf("End macro found\n");
+            macro_flag = 0;
+
+
+        }
+        */
+        fputs(text_line, file_to_write);
 
     }
-    printf("Number of characters in input file is %d\n", counter);
+    printf("Number of lines in input file is %d\n", counter);
     printf("---------------------------------------------------------------\n");
 
 
@@ -125,7 +158,7 @@ int main(int argc, char** argv) {
     }
 
     fclose(file_to_write);
-    /*printlist(head);*/
+    //printlist(head);
 
     free(tmp); /*free the memory*/
     return 0;
