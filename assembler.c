@@ -3,38 +3,6 @@
 
 
 
-// void printlist(node_t* head) {
-//     node_t* temporary = head;
-//     while (temporary != NULL) {
-//         printf("%d - \t", temporary->value);
-//         printf("%s", temporary->arr);
-//         temporary = temporary->next;
-//     }
-//     printf("\n");
-// }
-
-// node_t* create_new_node(int value) {
-//     int i = 0;
-
-
-//     node_t* result = malloc(sizeof(node_t));
-//     node_t result_space = *result;
-//     node_t* tmp_ptr = result;
-//     result->value = value;
-//     result->next = NULL;
-
-//     for (i = 0;i < LINE_MAX_LEN;i++)
-//         result->arr[i] = SPACE;
-//     result->arr[LINE_MAX_LEN] = END;
-
-
-
-//     return tmp_ptr;
-// }
-
-
-
-
 
 int main(int argc, char** argv) {
     node_t* tmp;
@@ -81,27 +49,18 @@ int main(int argc, char** argv) {
         printf("Input file is %s\n", file_name_holder);
 
 
-        //printf(strstr(file_to_read, "macro"));
-        //printf(strstr(fgets(,10,file_to_read), "macro")); search macro on every line
-
         while (fgets(text_line, LINE_MAX_LEN, file_to_read) != NULL) {
-
-
 
             if (strstr(text_line, "endmacro") != NULL) {
                 printf("%s %d\n", "End macro found in line:", counter);
                 macro_flag = 0;
-
 
             }
             else if (strstr(text_line, "macro") != NULL) {
                 printf("%s %d\n", "Macro found in line:", counter);
                 macro_flag = 1;
                 fprintf(macro_table, "macro in line %d is: %s", counter, (strstr(text_line, "macro")) + 6); //TODO handle spaces
-
             }
-
-
             if (macro_flag == 1)
                 fputs(text_line, macro_table);
 
@@ -171,8 +130,17 @@ int main(int argc, char** argv) {
         //         printexternals(i, argv, Stail);
         //     }
 
+
+        //check for symbol
+
+        //check if "data" "string" or "struct"
+
+        //if label exists put it in the symbol table maked as data with valeo DC, if the symbol allready exists, inform error
+
+        //check for the data type, "code" it
+        printlist(head);
     }
-    printlist(head);
+
 
 
 
