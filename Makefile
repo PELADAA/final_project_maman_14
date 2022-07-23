@@ -11,3 +11,5 @@ clean:
 	rm -rf assembler
 	rm -rf *.exe
 	rm -rf *.o
+make save:
+	git add .; git commit; git push

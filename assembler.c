@@ -54,16 +54,25 @@ int main(int argc, char** argv) {
             if (strstr(text_line, "endmacro") != NULL) {
                 printf("%s %d\n", "End macro found in line:", counter);
                 macro_flag = 0;
+                counter++;
+                continue;
 
             }
             else if (strstr(text_line, "macro") != NULL) {
                 printf("%s %d\n", "Macro found in line:", counter);
                 macro_flag = 1;
-                fprintf(macro_table, "macro in line %d is: %s", counter, (strstr(text_line, "macro")) + 6); //TODO handle spaces
+                fprintf(macro_table, "\nmacro in line %d is: %s", counter, (strstr(text_line, "macro")) + 6); //TODO handle spaces
             }
-            if (macro_flag == 1)
-                fputs(text_line, macro_table);
 
+            if (macro_flag == 1) {
+                fputs(text_line, macro_table);
+                counter++;
+                continue;
+            }
+
+
+            //search for macro names, somthing like
+            //for (macro counter = 0 ; macro_counter < length(macro_arr); macro_counter++)
 
             tmp = create_new_node(counter);
 
