@@ -6,4 +6,3 @@ macro in line 7 is: m2
 macro m2
 inc H
 mov S1.2 ,r3
-3

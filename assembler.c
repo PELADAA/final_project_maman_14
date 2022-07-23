@@ -3,34 +3,34 @@
 
 
 
-void printlist(node_t* head) {
-    node_t* temporary = head;
-    while (temporary != NULL) {
-        printf("%d - \t", temporary->value);
-        printf("%s", temporary->arr);
-        temporary = temporary->next;
-    }
-    printf("\n");
-}
+// void printlist(node_t* head) {
+//     node_t* temporary = head;
+//     while (temporary != NULL) {
+//         printf("%d - \t", temporary->value);
+//         printf("%s", temporary->arr);
+//         temporary = temporary->next;
+//     }
+//     printf("\n");
+// }
 
-node_t* create_new_node(int value) {
-    int i = 0;
-
-
-    node_t* result = malloc(sizeof(node_t));
-    node_t result_space = *result;
-    node_t* tmp_ptr = result;
-    result->value = value;
-    result->next = NULL;
-
-    for (i = 0;i < LINE_MAX_LEN;i++)
-        result->arr[i] = SPACE;
-    result->arr[LINE_MAX_LEN] = END;
+// node_t* create_new_node(int value) {
+//     int i = 0;
 
 
+//     node_t* result = malloc(sizeof(node_t));
+//     node_t result_space = *result;
+//     node_t* tmp_ptr = result;
+//     result->value = value;
+//     result->next = NULL;
 
-    return tmp_ptr;
-}
+//     for (i = 0;i < LINE_MAX_LEN;i++)
+//         result->arr[i] = SPACE;
+//     result->arr[LINE_MAX_LEN] = END;
+
+
+
+//     return tmp_ptr;
+// }
 
 
 
@@ -46,12 +46,14 @@ int main(int argc, char** argv) {
     char c;
     int macro_flag = 0;
     int counter = 0;
+    int flag;
+    int IC, DC;
 
     char* file_name_holder = malloc(sizeof(char) * BUFFER_MAX);
     char* text_line = malloc(sizeof(char) * BUFFER_MAX);
 
 
-
+    /* main loop */
     for (i = 1;i < argc; i++) {
         printf("argc is: %d i is : %d\n", argc, i);
 
@@ -59,14 +61,9 @@ int main(int argc, char** argv) {
         strcpy(file_name_holder, argv[i]);
         printf("argv is: %s\n", argv[i]);
 
-        //printf("string after dot is %s\n", strrchr(file_name_holder, DOT));
-
         strncat(file_name_holder, AS_SUFFIX, SUFFIX_LENGTH);
 
         printf("file created is: %s\n", file_name_holder);
-
-
-
 
 
         FILE* file_to_read = fopen(file_name_holder, "r");
@@ -91,15 +88,6 @@ int main(int argc, char** argv) {
 
 
 
-            /*if (c == NEW_LINE) {
-                c = SPACE;
-            }
-            if (c <= 0) {
-                c = ASTERISK;
-
-                fprintf(stderr, "Warning: Illegal character replaced with * \n");
-            }
-            */
             if (strstr(text_line, "endmacro") != NULL) {
                 printf("%s %d\n", "End macro found in line:", counter);
                 macro_flag = 0;
@@ -111,8 +99,6 @@ int main(int argc, char** argv) {
                 macro_flag = 1;
                 fprintf(macro_table, "macro in line %d is: %s", counter, (strstr(text_line, "macro")) + 6); //TODO handle spaces
 
-
-
             }
 
 
@@ -123,24 +109,21 @@ int main(int argc, char** argv) {
             tmp = create_new_node(counter);
 
             tmp->next = head;
-            strcpy(tmp->arr, text_line);
-            //tmp->arr = *text_line;
-            //if (temp_char != EOF)
-                //tmp->arr[j] = temp_char;
 
+            if (head != NULL)
+                head->prev = tmp;
+            //macro node
+
+            strcpy(tmp->arr, text_line);
             tmp->value = counter;
             tmp->arr[LINE_MAX_LEN - 1] = END;
+
             head = tmp;
+
 
             counter++;
 
-            /*if (strstr(text_line, "endmacro") != NULL) {
-                printf("End macro found\n");
-                macro_flag = 0;
 
-
-            }
-            */
             fputs(text_line, file_to_write);
 
         }
@@ -156,32 +139,43 @@ int main(int argc, char** argv) {
         fclose(file_to_write);
         fopen("precompiler_output.txt", "r");
 
-
-
-        /*
-        while (temp_char != EOF) {
-
-            tmp = create_new_node(i);
-            tmp->next = head;
-
-            for (j = 0; j < LINE_MAX_LEN; j++) {
-                temp_char = fgetc(file_to_write);
-                if (temp_char != EOF)
-                    tmp->arr[j] = temp_char;
-            }
-
-            tmp->arr[LINE_MAX_LEN] = END;
-            head = tmp;
-            i++;
-
-        }
-        */
         fclose(file_to_write);
-        printlist(head);
+
         //i++;
-        //printf("argc is: %d i is : %d\n", argc, i);
+        printf("argc is: %d i is : %d\n", argc, i);
+
+
+        //     struct  Macro* Mtail = NULL;
+        //     struct  Macro* Mhead = NULL;
+        //     struct  Stable* Stail = NULL;
+        //     struct  Stable* Shead = NULL;
+        //     struct  Decode* Dtail = NULL;
+        //     struct  Decode* Dhead = NULL;
+        //     Mhead = (struct Macro*)malloc(sizeof(struct Macro));
+        //     Mtail = (struct Macro*)malloc(sizeof(struct Macro));
+        //     Mtail = Mhead;
+        //     Shead = (struct Stable*)malloc(sizeof(struct Stable));
+        //     Stail = (struct Stable*)malloc(sizeof(struct Stable));
+        //     Stail = Shead;
+        //     Dhead = (struct Decode*)malloc(sizeof(struct Decode));
+        //     Dtail = (struct Decode*)malloc(sizeof(struct Decode));
+        //     Dtail = Dhead;
+        //     flag = PreReadFile(i, argv, Mhead);
+        //     if (!flag)
+        //     {
+        //         PreWriteFile(i, argv, Mtail);
+        //         flag = FirstCheck(i, argv, Shead, Dhead, &IC, &DC);
+        //         if (!flag)
+        //             SecondCheck(i, argv, Stail, Dtail, &IC, &DC);
+        //         printentries(i, argv, Stail);
+        //         printexternals(i, argv, Stail);
+        //     }
 
     }
+    printlist(head);
+
+
+
     //free(tmp); /*free the memory*/
     return 0;
 }

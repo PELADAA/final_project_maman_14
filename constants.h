@@ -25,6 +25,8 @@
 #define OBJ_EXT ".ob"
 #define EXT_EXT ".ext"
 #define ENT_EXT ".ent"
+#define BUFFER_MAX 80
+#define MAX 100
 
 /*
  *	The three types of encode:
@@ -86,6 +88,10 @@ typedef enum {
 #define IMD_FLAG '#'
 #define RND_FLAG '*'
 #define ARG_SEPERATOR ','
+
+#define END '\0'
+#define TAB '   '
+
 #define SPACE ' '
 
 /* Flag status */

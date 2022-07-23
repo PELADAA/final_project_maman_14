@@ -3,6 +3,9 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
+
+
+
 /* Structure of an operation (command) word */
 typedef struct {
     unsigned int decode : DECODE_SIZE;
@@ -48,7 +51,33 @@ struct  node
     char arr[LINE_MAX_LEN];
     int value;
     struct node* next;
+    struct node* prev;
 };
 typedef struct node node_t;
+
+
+struct Stable {
+    char symbol[MAX];
+    int value;
+    int baseaddress;
+    int offset;
+    char attributes[5];
+    struct Stable* next;
+};
+
+struct Decode {
+    char symbol[MAX];
+    char opcode[21];
+    char funct[5];
+    char sregister[5];
+    char saddress[3];
+    char dregister[5];
+    char daddress[3];
+    char ssymbol[MAX];
+    char dsymbol[MAX];
+    char dataorstring[MAX];
+    struct Decode* next;
+};
+
 
 #endif
