@@ -25,15 +25,15 @@ int main(int argc, char** argv) {
     for (i = 1;i < argc; i++) {
         printf("argc is: %d i is : %d\n", argc, i);
 
-
+        /* copy raw file name */
         strcpy(file_name_holder, argv[i]);
         printf("argv is: %s\n", argv[i]);
-
+        /* add a suffix */
         strncat(file_name_holder, AS_SUFFIX, SUFFIX_LENGTH);
 
         printf("file created is: %s\n", file_name_holder);
 
-
+        /* open relevent files */
         FILE* file_to_read = fopen(file_name_holder, "r");
         FILE* file_to_write = fopen("precompiler_output.txt", "w");
         FILE* macro_table = fopen("macro_table.txt", "w");
@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
 
         printf("Input file is %s\n", file_name_holder);
 
-
+        /* while the line in not null */
         while (fgets(text_line, LINE_MAX_LEN, file_to_read) != NULL) {
 
             if (strstr(text_line, "endmacro") != NULL) {
@@ -61,7 +61,9 @@ int main(int argc, char** argv) {
             else if (strstr(text_line, "macro") != NULL) {
                 printf("%s %d\n", "Macro found in line:", counter);
                 macro_flag = 1;
-                fprintf(macro_table, "\nmacro in line %d is: %s", counter, (strstr(text_line, "macro")) + 6); //TODO handle spaces
+                fprintf(macro_table, "\n[%s]\n", clear_spaces(strstr(text_line, "macro"))); //TODO handle spaces
+                counter++;
+                continue;
             }
 
             if (macro_flag == 1) {
@@ -74,23 +76,17 @@ int main(int argc, char** argv) {
             //search for macro names, somthing like
             //for (macro counter = 0 ; macro_counter < length(macro_arr); macro_counter++)
 
+            /* add node to head */
             tmp = create_new_node(counter);
-
             tmp->next = head;
-
             if (head != NULL)
                 head->prev = tmp;
-            //macro node
 
             strcpy(tmp->arr, text_line);
             tmp->value = counter;
             tmp->arr[LINE_MAX_LEN - 1] = END;
-
             head = tmp;
-
-
             counter++;
-
 
             fputs(text_line, file_to_write);
 

@@ -166,7 +166,7 @@ char* clear_spaces(char input_str[]) {
     while (*c == SPACE) {
         *c = (input_str[i++]);
     }
-    i = i + 5;//set magic number to skip macro
+    i = i + CHARACTERS_IN_WORD_MACRO;
     *c = input_str[i];
     while (*c == SPACE) {
         *c = (input_str[++i]);
