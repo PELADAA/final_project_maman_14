@@ -14,6 +14,7 @@ int main(int argc, char** argv) {
 
     int j;
     char c;
+    int skip = 0;
     int macro_flag = 0;
     int macro_exist = 0;
     int macro_counter;
@@ -31,6 +32,7 @@ int main(int argc, char** argv) {
 
         macro_counter = 0;
 
+
         printf("argc is: %d i is : %d\n", argc, i);
 
         /* copy raw file name */
@@ -44,8 +46,9 @@ int main(int argc, char** argv) {
         /* open relevent files */
         FILE* file_to_read = fopen(file_name_holder, "r");
         FILE* file_to_write = fopen("precompiler_output.txt", "w");
-        FILE* macro_table = fopen("macro_table.txt", "w");
+        FILE* macro_table = fopen("macro_table.txt", "w+");
         FILE* macro_index = fopen("macro_index.txt", "w");
+
 
 
 
@@ -61,9 +64,10 @@ int main(int argc, char** argv) {
 
         /* while the line in not null */
         while (fgets(text_line, LINE_MAX_LEN, file_to_read) != NULL) {
-
+            skip = 0;
             if (strstr(text_line, "endmacro") != NULL) {
                 printf("%s %d\n", "End macro found in line:", counter);
+                fprintf(macro_table, "END OF MACRO");
                 macro_flag = 0;
                 counter++;
                 continue;
@@ -73,7 +77,7 @@ int main(int argc, char** argv) {
                 printf("%s %d\n", "Macro found in line:", counter);
                 macro_flag = 1;
                 macro_exist = 1;
-                //macro_name_holder = *(clear_spaces(strstr(text_line, "macro")));
+
                 strcpy(macro_name_holder, (clear_spaces(strstr(text_line, "macro"))));
                 fprintf(macro_table, "\n[%s]\n", macro_name_holder);
 
@@ -103,31 +107,60 @@ int main(int argc, char** argv) {
                 {
                     if (strstr(text_line, macro_name_arr[j - 1])) {
                         printf("macro to replace found: %s in line: %d\n", macro_name_arr[j - 1], counter);
+                        rewind(macro_table);
 
+                        while (fgets(text_line, LINE_MAX_LEN, macro_table) != NULL) {
+                            printf("checking\n");
+                            if (strstr(text_line, macro_name_arr[j - 1]) != NULL) {
+                                printf("macro found in table\n");
+
+                                while (fgets(text_line, LINE_MAX_LEN, macro_table) != NULL && strstr(text_line, "END OF MACRO") == NULL) {
+
+
+                                    printf("running: %s", text_line);
+                                    tmp = create_new_node(counter);
+                                    tmp->next = head;
+                                    if (head != NULL)
+                                        head->prev = tmp;
+
+                                    strcpy(tmp->arr, text_line);
+                                    tmp->value = counter;
+                                    tmp->arr[LINE_MAX_LEN - 1] = END;
+                                    head = tmp;
+                                    counter++;
+
+                                    fputs(text_line, file_to_write);
+                                    skip = 1;
+                                }
+
+
+                            }
+                            //fclose(macro_table);
+                            //fopen(macro_table, 'w');
+
+                        }
 
                     }
 
+                    //for (macro counter = 0 ; macro_counter < length(macro_arr); macro_counter++)
                 }
-
-                //for (macro counter = 0 ; macro_counter < length(macro_arr); macro_counter++)
             }
 
+            if (skip == 0) {
+                /* add node to head */
+                tmp = create_new_node(counter);
+                tmp->next = head;
+                if (head != NULL)
+                    head->prev = tmp;
 
+                strcpy(tmp->arr, text_line);
+                tmp->value = counter;
+                tmp->arr[LINE_MAX_LEN - 1] = END;
+                head = tmp;
+                counter++;
 
-            /* add node to head */
-            tmp = create_new_node(counter);
-            tmp->next = head;
-            if (head != NULL)
-                head->prev = tmp;
-
-            strcpy(tmp->arr, text_line);
-            tmp->value = counter;
-            tmp->arr[LINE_MAX_LEN - 1] = END;
-            head = tmp;
-            counter++;
-
-            fputs(text_line, file_to_write);
-
+                fputs(text_line, file_to_write);
+            }
         }
         printf("---------------------------------------------------------------\n");
 
@@ -141,6 +174,7 @@ int main(int argc, char** argv) {
         fopen("precompiler_output.txt", "r");
 
         fclose(file_to_write);
+        fclose(macro_table);
 
         //i++;
         printf("argc is: %d i is : %d\n", argc, i);

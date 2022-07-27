@@ -1,8 +1,9 @@
 
-[m1]
+[m4]
 inc K
 mov S1.2 ,r3
-
-[m2]
+END OF MACRO
+[m3]
 inc H
 mov S1.2 ,r3
+END OF MACRO
