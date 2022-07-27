@@ -5,9 +5,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Sun Jul 24 22:20:03 2022
+# Make data base, printed on Tue Jul 26 07:30:22 2022
 
 # Variables
 
@@ -42,11 +41,13 @@ VSCODE_CWD = /mnt/c/Users/yoavf/AppData/Local/Programs/Microsoft VS Code
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/suasidius/.vscode-server/bin/b06ae3b2d2dbfe28bca3134cc6be65935cdfea6a/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Program Files (x86)/VMware/VMware Player/bin/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Intel/ipp/x64:/mnt/c/Program Files/Intel/WiFi/bin/:/mnt/c/Program Files/Common Files/Intel/WirelessCommon/:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files/Scripts:/mnt/c/Users/yoavf/AppData/Local/Programs/Python/Python39/Scripts:/mnt/c/Program Files (x86)/dotnet/:/mnt/c/ProgramData/Mobileye/customerData/win32:/mnt/c/ProgramData/Mobileye/customerData/win64:/mnt/c/Users/yoavf/AppData/Local/Programs/Microsoft VS Code/bin
+PATH = /home/suasidius/.vscode-server/bin/3b889b090b5ad5793f524b5d1d39fda662b96a2a/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Program Files (x86)/VMware/VMware Player/bin/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Intel/ipp/x64:/mnt/c/Program Files/Intel/WiFi/bin/:/mnt/c/Program Files/Common Files/Intel/WirelessCommon/:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files/Scripts:/mnt/c/Users/yoavf/AppData/Local/Programs/Python/Python39/Scripts:/mnt/c/Program Files (x86)/dotnet/:/mnt/c/ProgramData/Mobileye/customerData/win32:/mnt/c/ProgramData/Mobileye/customerData/win64:/mnt/c/Users/yoavf/AppData/Local/Programs/Microsoft VS Code/bin
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
 ELECTRON_RUN_AS_NODE = 1
+# environment
+VSCODE_SERVER_TAR = /mnt/c/Users/yoavf/AppData/Local/Temp/vscode-remote-wsl/3b889b090b5ad5793f524b5d1d39fda662b96a2a/vscode-server-stable-linux-x64.tar.gz
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -56,7 +57,7 @@ LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:
 # environment
 PWD = /home/suasidius/mamanFolder/final_project_maman_14
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-31d33f18-33c0-4a99-8809-74bbb301feaf.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-479684da-ab34-48ee-ac26-f6013b790953.sock
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -138,7 +139,7 @@ TERM = xterm-256color
 # environment
 WSL_DISTRO_NAME = Ubuntu-18.04
 # variable set hash-table stats:
-# Load=63/1024=6%, Rehash=0, Collisions=3/91=3%
+# Load=64/1024=6%, Rehash=0, Collisions=3/92=3%
 
 # Pattern-specific Variable Values
 
@@ -261,6 +262,6 @@ dbg:
 # strcache performance: lookups = 41 / hit rate = 31%
 # hash-table stats:
 # Load=28/8192=0%, Rehash=0, Collisions=1/41=2%
-# Finished Make data base on Sun Jul 24 22:20:03 2022
+# Finished Make data base on Tue Jul 26 07:30:22 2022
 
  

@@ -28,6 +28,8 @@
 #define BUFFER_MAX 80
 #define MAX 100
 
+
+
 /*
  *	The three types of encode:
  *	absolute, external and relocatable.

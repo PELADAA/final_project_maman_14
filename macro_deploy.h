@@ -7,6 +7,7 @@
 
 //#define SPACE 32
 #define MAX 100
+#define CHARACTERS_IN_WORD_MACRO 5
 
 
 struct Macro {
