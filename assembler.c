@@ -164,7 +164,16 @@ int main(int argc, char** argv) {
         }
         printf("---------------------------------------------------------------\n");
 
+        tmp = create_new_node(counter);
+        tmp->next = head;
+        if (head != NULL)
+            head->prev = tmp;
 
+        strcpy(tmp->arr, "\nEND OF LIST\n");
+        tmp->value = counter;
+        tmp->arr[LINE_MAX_LEN - 1] = END;
+        head = tmp;
+        counter++;
 
         rewind(file_to_read);
         rewind(file_to_write);
@@ -179,8 +188,9 @@ int main(int argc, char** argv) {
         //i++;
         printf("argc is: %d i is : %d\n", argc, i);
 
-
+        printf("\n");
         printlist(head);
+        printf("\n");
     }
 
 
