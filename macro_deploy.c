@@ -307,6 +307,9 @@ int IsMacroCall(char line[], FILE* fpw, struct Macro* tail) /*Copy the contents 
     }
     return 0;
 }
+
+
+
 void PreWriteFile(int i, char* argv[], struct Macro* tail)
 {
     int macroflag = 0;

@@ -67,11 +67,11 @@ typedef enum {
     DEC,
     JMP,
     BNE,
-    RED,
+    GET,
     PRN,
     JSR,
     RTS,
-    STOP
+    HLT
 } OPCODE; /* !Retain the current order! see info in inst_type */
 
 typedef enum {

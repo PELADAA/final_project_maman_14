@@ -4,6 +4,7 @@
 
 
 
+
 int main(int argc, char** argv) {
     node_t* tmp;
     node_t* head = NULL;
@@ -190,7 +191,10 @@ int main(int argc, char** argv) {
 
         printf("\n");
         printlist(head);
+        first_scan(head);
+        head = NULL;
         printf("\n");
+
     }
 
 

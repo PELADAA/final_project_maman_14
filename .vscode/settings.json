@@ -34,6 +34,11 @@
   "files.associations": {
     "assembler.h": "c",
     "macro_deploy.h": "c",
-    "stdlib.h": "c"
+    "stdlib.h": "c",
+    "structs.h": "c",
+    "constants.h": "c",
+    "first_scan.h": "c",
+    "stdio.h": "c",
+    "utils.h": "c"
   }
 }

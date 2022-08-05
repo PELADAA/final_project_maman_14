@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jul 26 07:30:22 2022
+# Make data base, printed on Fri Aug  5 14:44:40 2022
 
 # Variables
 
@@ -15,7 +15,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # automatic
 ?F = $(notdir $?)
 # environment
-WSLENV = ELECTRON_RUN_AS_NODE/w:
+WSLENV = VSCODE_WSL_EXT_LOCATION/up
 # default
 .SHELLFLAGS := -c
 # automatic
@@ -31,7 +31,7 @@ SHELL = /bin/sh
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
-_ = /mnt/c/Users/yoavf/AppData/Local/Programs/Microsoft VS Code/bin/code
+_ = /home/suasidius/.vscode-server/bin/da76f93349a72022ca4670c1b84860304616aaa2/node
 # makefile (from 'Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # 'override' directive
@@ -41,13 +41,11 @@ VSCODE_CWD = /mnt/c/Users/yoavf/AppData/Local/Programs/Microsoft VS Code
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/suasidius/.vscode-server/bin/3b889b090b5ad5793f524b5d1d39fda662b96a2a/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Program Files (x86)/VMware/VMware Player/bin/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Intel/ipp/x64:/mnt/c/Program Files/Intel/WiFi/bin/:/mnt/c/Program Files/Common Files/Intel/WirelessCommon/:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files/Scripts:/mnt/c/Users/yoavf/AppData/Local/Programs/Python/Python39/Scripts:/mnt/c/Program Files (x86)/dotnet/:/mnt/c/ProgramData/Mobileye/customerData/win32:/mnt/c/ProgramData/Mobileye/customerData/win64:/mnt/c/Users/yoavf/AppData/Local/Programs/Microsoft VS Code/bin
+PATH = /home/suasidius/.vscode-server/bin/da76f93349a72022ca4670c1b84860304616aaa2/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Program Files (x86)/VMware/VMware Player/bin/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Intel/ipp/x64:/mnt/c/Program Files/Intel/WiFi/bin/:/mnt/c/Program Files/Common Files/Intel/WirelessCommon/:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files/Scripts:/mnt/c/Users/yoavf/AppData/Local/Programs/Python/Python39/Scripts:/mnt/c/Program Files (x86)/dotnet/:/mnt/c/Program Files/dotnet/:/mnt/c/ProgramData/Mobileye/customerData/win32:/mnt/c/ProgramData/Mobileye/customerData/win64:/mnt/c/Users/yoavf/AppData/Local/Programs/Microsoft VS Code/bin
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
 ELECTRON_RUN_AS_NODE = 1
-# environment
-VSCODE_SERVER_TAR = /mnt/c/Users/yoavf/AppData/Local/Temp/vscode-remote-wsl/3b889b090b5ad5793f524b5d1d39fda662b96a2a/vscode-server-stable-linux-x64.tar.gz
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -57,7 +55,7 @@ LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:
 # environment
 PWD = /home/suasidius/mamanFolder/final_project_maman_14
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-479684da-ab34-48ee-ac26-f6013b790953.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-6dada8b7-fc0c-45ee-89dd-beb43690af1a.sock
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -79,7 +77,7 @@ MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # environment
-SHLVL = 1
+SHLVL = 0
 # default
 MAKE_VERSION := 4.1
 # environment
@@ -87,7 +85,7 @@ USER = suasidius
 # makefile
 .DEFAULT_GOAL := all
 # environment
-NAME = Code
+NAME = mewl8031
 # environment
 LESS = -R
 # automatic
@@ -139,7 +137,7 @@ TERM = xterm-256color
 # environment
 WSL_DISTRO_NAME = Ubuntu-18.04
 # variable set hash-table stats:
-# Load=64/1024=6%, Rehash=0, Collisions=3/92=3%
+# Load=63/1024=6%, Rehash=0, Collisions=3/91=3%
 
 # Pattern-specific Variable Values
 
@@ -147,9 +145,9 @@ WSL_DISTRO_NAME = Ubuntu-18.04
 
 # Directories
 
-# . (device 2, inode 338614396982998304): 17 files, no impossibilities.
+# . (device 2, inode 338614396982998304): 25 files, no impossibilities.
 
-# 17 files, no impossibilities in 1 directories.
+# 25 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -197,7 +195,7 @@ all:
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/11=9%
 #  recipe to execute (from 'Makefile', line 3):
-	gcc assembler.c assembler.h structs.h constants.h macro_deploy.c macro_deploy.h -o assembler
+	gcc assembler.c assembler.h structs.h constants.h macro_deploy.c macro_deploy.h first_scan.h first_scan.c utils.c utils.h -o assembler
 
 exec2:
 #  Implicit rule search has not been done.
@@ -215,7 +213,7 @@ exec2:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-24 22:19:56.7775222
+#  Last modified 2022-08-05 10:38:18.6933852
 #  File has been updated.
 #  Successfully updated.
 
@@ -256,12 +254,12 @@ dbg:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 28 / storage = 284 B / avg = 10 B
-# current buf: size = 8162 B / used = 284 B / count = 28 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 36 / storage = 390 B / avg = 10 B
+# current buf: size = 8162 B / used = 390 B / count = 36 / avg = 10 B
 
-# strcache performance: lookups = 41 / hit rate = 31%
+# strcache performance: lookups = 49 / hit rate = 26%
 # hash-table stats:
-# Load=28/8192=0%, Rehash=0, Collisions=1/41=2%
-# Finished Make data base on Tue Jul 26 07:30:22 2022
+# Load=36/8192=0%, Rehash=0, Collisions=2/49=4%
+# Finished Make data base on Fri Aug  5 14:44:40 2022
 
  

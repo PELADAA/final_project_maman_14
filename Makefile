@@ -1,6 +1,6 @@
 #this is a makefile
 all:
-	gcc assembler.c assembler.h structs.h constants.h macro_deploy.c macro_deploy.h -o assembler
+	gcc assembler.c assembler.h structs.h constants.h macro_deploy.c macro_deploy.h first_scan.h first_scan.c utils.c utils.h -o assembler
 exec1: 
 	./assembler test_input 
 exec2: 

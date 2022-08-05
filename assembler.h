@@ -6,6 +6,8 @@
 #include "constants.h"
 #include "structs.h"
 #include "macro_deploy.h"
+#include "first_scan.h"
+
 
 
 //#define LINE_MAX 80 
@@ -21,5 +23,5 @@
 
 
 
-void printlist(node_t* head);
+//void printlist(node_t* head);
 

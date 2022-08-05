@@ -1,0 +1,74 @@
+; vjdaodjajdojaodjoiejaroij;rciourpuwarouowajeifljewlijiflsejigesjolfjsdljflidjifl     ksdfjclisfj
+         
+         ;numbers problems:
+.struct 9809, "a"
+.data 10b
+cmp #-5ghj, r6
+.struct "ghj", 9809
+   
+; nonsense
+somdslds
+.exterm
+mhugugi56kk bjbk
+
+ ; macro 
+macro mhugugi56kk
+add s.2 ,#-4
+sub #-4.5, s.2
+cmp #89, s.3
+endmacro
+
+
+; comma problems:
+PO: mov, r2, r1
+PPO: add r2, r1,
+jmp LABEL,
+cmp #-5
+LABEL: .data, 9
+.data 9, 8 ,
+.data 9 ,8 ,
+.struct 90 ,"jk",
+.struct 90, "jk",
+.struct 90 , "jk",
+.struct 90 , "jk" ,
+.string , "ojl"
+.string, "ojl"
+.string ,"ojl"
+hlt ,
+.extern, me
+.entry, me
+
+  ;entry/extern problem
+.entry LABEL1
+.entry LABEL2
+.extern LABEL2
+.entry LABEL
+.entry LABEL
+
+
+; operands problems:
+hlt me
+sub L,
+lea r2, #3
+inc #9
+cmp #-5,
+sub #5, #6
+inc r9.9
+inc mov
+inc r9.789ghj
+get r0
+clr #78
+mhugugi56kk
+
+     ;label problems:
+LABEL: .string "asa"
+LABEL: .data 6, 7
+mov: .data
+.entry: .data
+Lab>: .data
+data: mov r2 r1
+MEE: 
+ME: .entry
+.data1: 
+data1: 
+r9.789ghj: .data 7
