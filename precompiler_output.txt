@@ -1,16 +1,17 @@
-test input 2
-MAIN: mov S1.1 ,LENGTH
+test input 1
+  MAIN  : mov S1.1 ,LENGTH
 add r2,STR
 LOOP: jmp END
+; comment
 prn #-5
 sub r1, r4
-inc H
+inc K
 mov S1.2 ,r3
 bne LOOP
 END: hlt
+inc H
+mov S1.2 ,r3
 STR: .string "abcdef"
 LENGTH: .data 6,-9,15
 K: .data 22
-inc K
-mov S1.2 ,r3
 S1: .struct 8, "ab" 

@@ -1,11 +1,12 @@
 test input 1
-MAIN  : mov S1.1 ,LENGTH
+  MAIN  : mov S1.1 ,LENGTH
 add r2,STR
 LOOP: jmp END
 macro m1
 inc K
 mov S1.2 ,r3
 endmacro
+; comment
 macro m2
 inc H
 mov S1.2 ,r3

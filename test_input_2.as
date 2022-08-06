@@ -13,6 +13,7 @@ endmacro
 prn #-5
 sub r1, r4
 m3
+;
 bne LOOP
 END: hlt
 STR: .string "abcdef"

@@ -1,4 +1,5 @@
 #include "first_scan.h"
+#include "macro_deploy.h"
 
 
 int SetNext(ptSymbol* head, char* command, int from, int length, int adress, short type)
@@ -126,18 +127,56 @@ void upgreadeSymbols(ptSymbol head, int IC)
 
 
 void first_scan(node_t* input_node_head) {
-    int mem_counter = 100;
+    int IC = 100;
     char* ptr;
-    printf("input_node_head: %d\n", mem_counter);
-
+    node_t* symbolnode;
+    node_t* symbol_head = NULL;
+    printf("input_node_head: %d\n", IC);
+    /* check for comments */
     while (input_node_head->next != NULL) {
-        printf("counter: %d\n", mem_counter);
+        printf("IC: %d\n", IC);
         input_node_head = input_node_head->next;
 
         ptr = input_node_head->arr;
-        //while (ptr != ";" || ptr != NEWLINE);
-        //ptr++;
-        printf("ptr location is: %s\n", ptr);
+        if (strstr(ptr, ";") != NULL) {
+            printf("comment found, ptr: %c\n", *ptr);
+
+
+        }
+        else
+        {
+            if (strstr(ptr, ":") != NULL) {
+
+
+
+
+                ptr = input_node_head->arr;
+                char c = *ptr;
+                printf("Label found In: %sand c = %c\n", ptr, *ptr);
+                symbolnode = create_new_node(IC);
+                symbolnode->next = symbol_head;
+                if (symbol_head != NULL)
+                    symbol_head->prev = symbolnode;
+                int running_counter;
+                for (running_counter = 0;c != LABEL_DELIM; running_counter++) {
+                    //printf("%c", c);
+                    c = (char)*(ptr++);
+
+
+                    symbolnode->arr[running_counter] = c;
+                    if (c == SPACE)
+                        running_counter--;
+
+
+
+                }
+                symbolnode->arr[running_counter - 1] = '\0';
+                printf("clean LABEL: <%s> IC: %d\n", symbolnode->arr, IC);
+            }
+
+        }
+        //printf("ptr location is: %s\n", ptr);
+
 
         // define 
         //TODO check for labels serch for ":" and return "label exist"
@@ -158,6 +197,8 @@ void first_scan(node_t* input_node_head) {
         //after symbol table is created
 
         //check for "."
-        mem_counter++;
+        IC++;
     }
+    printf("symbole list:\n");
+    //printlist(symbol_head);
 }
