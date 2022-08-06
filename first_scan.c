@@ -197,6 +197,27 @@ void first_scan(node_t* input_node_head) {
         //after symbol table is created
 
         //check for "."
+        
+        /*Lada:first check
+-loop that goes over each line at file
+-operands: ץ raise notice for a symbol, number of line
+A check if there’s no empty spots or next line. 
+- -good line: finds num of the first char after space (the number of the char in the line)
+- -Find number of the last char in the word
+- -A check if there’s a really a label(:)
+- -Pointer to the begging of the label+ length of the label to check if it’s length ok
+- -A check if there’s something after the label (needs to be else error)
+- -Checks if after label comes directive + is valid and existent directive
+- If a struct -add the label to the list (set next) short type for struct=1 (others 0)
+- -Now adding the data after string ,data ,or struct directive to data list and returns the index after this data
+- -Checks if there’s something left in the. Line (not supposed to be
+- -Check if directive is .extern 
+- -Moves index after the” .extern” and adds data(label) to the list
+- -If there’s no directive, checks if there’s previous label- if no then adds label to list
+- -Than looks if there’s an order and returns number of order
+- -Checks and returns how many location spots the order needs 
+- -Updating the location spots in IC
+- -In the end of the file- command that updating all labels address */
         IC++;
     }
     printf("symbole list:\n");
