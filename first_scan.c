@@ -128,53 +128,65 @@ void upgreadeSymbols(ptSymbol head, int IC)
 
 void first_scan(node_t* input_node_head) {
     int IC = 100;
+    int DC = 0;
+    int symbol_flag = 0;
     char* ptr;
     node_t* symbolnode;
     node_t* symbol_head = NULL;
     printf("input_node_head: %d\n", IC);
-    /* check for comments */
+    /* Rewind input list */
     while (input_node_head->next != NULL) {
-        printf("IC: %d\n", IC);
         input_node_head = input_node_head->next;
+    }
+
+
+    while (input_node_head->prev != NULL) {
+        //printf("IC: %d\n", IC);
+        input_node_head = input_node_head->prev;
 
         ptr = input_node_head->arr;
         if (strstr(ptr, ";") != NULL) {
-            printf("comment found, ptr: %c\n", *ptr);
+            //printf("comment found, ptr: %c\n", *ptr);
+            IC--;
 
 
         }
-        else
-        {
-            if (strstr(ptr, ":") != NULL) {
+        else if (strstr(ptr, ":") != NULL) {
+
+
+            symbol_flag = 1;
+
+            //is it allready in the list?
+            //is it .struct , .string or .data?
+
+            ptr = input_node_head->arr;
+            char c = *ptr;
+            //printf("Label found In: %sand c = %c\n", ptr, *ptr);
+            symbolnode = create_new_node(IC);
+            symbolnode->next = symbol_head;
+            if (symbol_head != NULL)
+                symbol_head->prev = symbolnode;
+
+
+            int running_counter;
+            for (running_counter = 0;c != LABEL_DELIM; running_counter++) {
+                //printf("%c", c);
+                c = (char)*(ptr++);
+
+
+                symbolnode->arr[running_counter] = c;
+                if (c == SPACE)
+                    running_counter--;
 
 
 
-
-                ptr = input_node_head->arr;
-                char c = *ptr;
-                printf("Label found In: %sand c = %c\n", ptr, *ptr);
-                symbolnode = create_new_node(IC);
-                symbolnode->next = symbol_head;
-                if (symbol_head != NULL)
-                    symbol_head->prev = symbolnode;
-                int running_counter;
-                for (running_counter = 0;c != LABEL_DELIM; running_counter++) {
-                    //printf("%c", c);
-                    c = (char)*(ptr++);
-
-
-                    symbolnode->arr[running_counter] = c;
-                    if (c == SPACE)
-                        running_counter--;
-
-
-
-                }
-                symbolnode->arr[running_counter - 1] = '\0';
-                printf("clean LABEL: <%s> IC: %d\n", symbolnode->arr, IC);
             }
-
+            symbolnode->arr[running_counter - 1] = '\0';
+            symbol_head = symbolnode;
+            printf("IC: %d LABEL: <%s> next is %s\n", symbolnode->value, symbolnode->arr, symbolnode->next->arr);
         }
+
+
         //printf("ptr location is: %s\n", ptr);
 
 
@@ -200,5 +212,5 @@ void first_scan(node_t* input_node_head) {
         IC++;
     }
     printf("symbole list:\n");
-    //printlist(symbol_head);
+    printlist(symbol_head);
 }
