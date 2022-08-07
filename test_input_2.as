@@ -1,4 +1,4 @@
-test input 2
+;test input 2
 MAIN: mov S1.1 ,LENGTH
 add r2,STR
 LOOP: jmp END

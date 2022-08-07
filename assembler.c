@@ -188,10 +188,17 @@ int main(int argc, char** argv) {
 
         //i++;
         printf("argc is: %d i is : %d\n", argc, i);
-
+        printf("************************************\n");
         printf("\n");
-        printlist(head);
-        first_scan(head);
+        //printlist(head);
+        if (first_scan(head) == NULL) {
+            printf("No LABEL\n");
+            printf("what: %p\n", second_scan(head));
+        }
+        else {
+            printf("LABEL exist\n");
+            //printlist(first_scan(head));
+        }
         head = NULL;
         printf("\n");
 

@@ -54,4 +54,4 @@ int addSymbols(ptSymbol* head, char* command, int from);/*Input: head of list, c
 void upgreadeSymbols(ptSymbol head, int IC);/*Input: head of list and IC. Output: updating all symbols adress.*/
 /*^ TODO refactor ^*/
 
-void first_scan(node_t* input_node_head);
+node_t* first_scan(node_t* input_node_head);

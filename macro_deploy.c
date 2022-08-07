@@ -18,7 +18,7 @@ void printlist(node_t* head) {
     //printf("prev is %s\n", temporary->prev->arr);
     while (temporary->prev != NULL) { /* print backwards */
         printf("%d - \t", temporary->value);
-        printf("%s", temporary->arr);
+        printf("%s\t", temporary->arr);
         temporary = temporary->prev;
 
 

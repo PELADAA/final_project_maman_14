@@ -7,6 +7,7 @@
 #include "structs.h"
 #include "macro_deploy.h"
 #include "first_scan.h"
+#include "second_scan.h"
 
 
 
