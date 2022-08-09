@@ -232,27 +232,27 @@ node_t* first_scan(node_t* input_node_head) {
             symbolnode->arr[running_counter - 1] = '\0';
             symbol_head = symbolnode;
             printf("IC: %d LABEL: <%s> next is %s\n", symbolnode->value, symbolnode->arr, symbolnode->next->arr);
-               /*  switch(INTresult)
+               /*  switch(directiveType)
 				{
 					case 1: //adding data from the .data to the data list
-					INTresult2 = addData(command, index, &DC, &Head_AsData);
-					if(INTresult2 < 0 && INTresult2 != -2)
+					directiveType = addData(input_node_head->arr, index, &DC, &Head_AsData);
+					if(directiveType < 0 && directiveType != -2)
 					{
 						printf("Error: in (line: %d, index: %d) Syntax error, after directive name. (expected: number,number..) note: all number must be between: -512:512 .\n",lineNumber,index);
 						ErrorJump
 					}					
 					break;
 					case 2://adding data from the .string to the data list
-					INTresult2 = addString(command, index, &DC, &Head_AsData);
-					if(INTresult2 < 0 && INTresult2 != -2)
+					directiveType = addString(input_node_head->arr, index, &DC, &Head_AsData);
+					if(directiveType < 0 && directiveType != -2)
 					{
 						printf("Error: in (line: %d, index: %d) Syntax error, after directive name. (expected: \"sum_text\").\n",lineNumber,index);	
 						ErrorJump						
 					}					
 					break;
 					case 3:	//adding data from the .struct to the data list				
-					INTresult2 = addStruct(command, index, &DC, &Head_AsData);
-					if(INTresult2 < 0 && INTresult2 != -2)
+					directiveType = addStruct(input_node_head->arr, index, &DC, &Head_AsData);
+					if(directiveType < 0 && directiveType != -2)
 					{
 						printf("Error: in (line: %d, index: %d) Syntax error, after directive name. (expected: number,\"sum_text\").\n",lineNumber,index);
 						ErrorJump
