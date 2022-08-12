@@ -2,28 +2,31 @@
 #include "macro_deploy.h"
 char symbolName[81];
 
-int isDirective (char *command, int from){
+int isItDirective(char* input_node_head->arr, int  arrSpotCounter) {
     int iterator = 1;
     char directive[7];
-    int i;    
-    if(command[from] == '.'){        
-        while((command[from+iterator] != ' ') && (command[from+iterator] !='\t') && (command[from+iterator] !='\0')){
-            if(iterator>=7)
+    int i;
+    if (command[arrSpotCounter] == '.') {
+        while ((input_node_head->arr[arrSpotCounter + iterator] != ' ') && (input_node_head->arr[ arrSpotCounter + iterator] != '\t') && (input_node_head->arr[arrSpotCounter + iterator] != '\0')) {
+            if (iterator >= 7)
                 return -1;
-            directive[iterator-1]=command[from+iterator];
+            directive[iterator - 1] = input_node_head->arr[arrSpotCounter + iterator];
             iterator++;
-        }        
-        directive[iterator-1]='\0';
-        for (i=0;i<5;i++){
-            if(strcmp(directive,directives[i])==0){
-                return i+1;
+        }
+        directive[iterator - 1] = '\0';
+        for (i = 0; i < 5; i++) {
+            if (strcmp(directive, directives[i]) == 0) {
+                return i + 1;
             }
         }
         return -1;
 
-    }    
+    }
     return -1;
-int SetNext(ptSymbol* head, char* command, int from, int length, int adress, short type)
+}
+
+
+int SetNext(symbolPtr* head, char* command, char * symbolName, int adress, short type)
 {
     ptSymbol pt;
     if (*head)
@@ -44,7 +47,7 @@ int SetNext(ptSymbol* head, char* command, int from, int length, int adress, sho
     if (pt && (pt->name = (char*)malloc((length + 1) * sizeof(char))))
     {
         pt->next = NULL;
-        pt->name = strncpy(pt->name, command + from, length);
+        pt->name = strncpy(pt->name, symbolName);
         pt->name[length] = '\0';
         pt->adress = adress;
         pt->type = type;
@@ -55,6 +58,7 @@ int SetNext(ptSymbol* head, char* command, int from, int length, int adress, sho
     }
     return 1;
 }
+
 
 int checkExist(node_t* head, char* name)//is it called ptSymbol inour project?
 {
@@ -146,6 +150,9 @@ void upgreadeSymbols(ptSymbol head, int IC)
     }
 }
 
+char symNameTmp[81];//symbol max size
+
+dataPointer HeadOfAsData = NULL; // datapoiters defenition is in AsData.c
 
 node_t* first_scan(node_t* input_node_head) {
     int IC = 100;
@@ -167,106 +174,114 @@ node_t* first_scan(node_t* input_node_head) {
         //printf("IC: %d\n", IC);
         input_node_head = input_node_head->prev;
         ptr = input_node_head->arr;
+        int arrSpotCounter =0;
+        lineCounter++;
         if (strstr(ptr, ";") != NULL) {
             //printf("comment found, ptr: %c\n", *ptr);
             IC--;
-
-
         }
         else if (strstr(ptr, ":") != NULL) {
-
-
             symbol_flag = 1;
-
-            //is it allready in the list?
-            //is it .struct , .string or .data?
-
             ptr = input_node_head->arr;
             char c = *ptr;
-            //printf("Label found In: %sand c = %c\n", ptr, *ptr);
-            symbolnode = create_new_node(IC);
-            symbolnode->next = symbol_head;
-            if (symbol_head != NULL)
-                symbol_head->prev = symbolnode;
-
-
             int running_counter;
+
             for (running_counter = 0;c != LABEL_DELIM; running_counter++) {
                 //printf("%c", c);
                 c = (char)*(ptr++);
-
-
-                symbolnode->arr[running_counter] = c;
+                arrSpotCounter++;
+                symNameTmp[running_counter] = c;
                 if (c == SPACE)
                     running_counter--;
-
-
-
             }
+
             //checks if the label already excist  - if yes error
-            if(checkSymbolExist(symbol_head,syName)) 
+            if(checkSymbolExist(symbol_head,symNameTmp))
 					{
 						printf("Error: Symbol already exist, and have been defined befor.\n");						
 						ErrorJump
 					}
             else
             {
-            while(*<ptr> ==' '|| *<ptr> == '\n')// replace by 'skipspace' loop
-            {ptr++}
-            if(*<ptr> =='.')
-            {
-                ptr++;
-                
+                if (running_counter > 30)
+                {
+                    printf(" Syntax error, Symbol name can't be longer than: 30.\n");
+                    //ErrorJump
+                }
+                //check - if heres something after the symbol. 
+                //  check what error needs to be if its infinity loop 
+                while (*<ptr> == ' ' || *<ptr> == '\n')
+                {
+                    ptr++
+                        arrSpotCounter++;
+                }
+                if (*<ptr> == '.')
+                {
+                    ptr++
+                        arrSpotCounter++;
+
+
+                    directiveType = isItDirective(input_node_head->arr, arrSpotCounter);
+                    if (isItDirective <= 0)
+                    {
+                        printf("Error: Syntax error, unknow directive name.\n");
+                        //ErrorJump
+                    }
+                    if (isItDirective <= 3 && symbol_flag == 1)   //directive after symbol- how to set next symbol?
+                    {
+                      if(checkSymbolExist(symbol_head,symNameTmp)){
+						printf(" Symbol already exist, and have been defined befor.\n");
+						//ErrorJump
+					   }
+					if(directiveType == 3)
+                        directiveType = SetNext(&symbol_head, input_node_head->arr, symbolName, DC, 1);//1- for sruct.
+                    else
+                        directiveType = SetNext(&symbol_head, input_node_head->arr, symbolName, DC, 0);
+                    if (directiveType == -2)
+                    {
+                        printf("Dynamic alocation error, could not add Symbol.\n");
+                        //ErrorJump
+                    }
+                        //symbol flag off?
+                        symbol_flag == 0
+                            ;
+                        symbolnode->arr[running_counter - 1] = '\0';
+                        symbol_head = symbolnode;
+                        printf("IC: %d LABEL: <%s> next is %s\n", symbolnode->value, symbolnode->arr, symbolnode->next->arr);
+                        switch (directiveType)
+                        {
+                        case 1: //adding data from the .data to the data list
+                            directiveType = addData(input_node_head->arr, arrSpotCounter, &DC, &HeadOfAsData);
+                            if (directiveType < 0 && directiveType != -2)
+                            {
+                                printf("Error: in (line: %d, index: %d) Syntax error, after directive name. (expected: number,number..) note: all number must be between: -512:512 .\n", lineNumber, index);
+                                ErrorJump
+                            }
+                            break;
+                        case 2://adding data from the .string to the data list
+                            directiveType = addString(input_node_head->arr, arrSpotCounter, &DC, &HeadOfAsData);
+                            if (directiveType < 0 && directiveType != -2)
+                            {
+                                printf("Error: in (line: %d, index: %d) Syntax error, after directive name. (expected: \"sum_text\").\n", lineNumber, index);
+                                ErrorJump
+                            }
+                            break;
+                        case 3:	//adding data from the .struct to the data list				
+                            directiveType = addStruct(input_node_head->arr, arrSpotCounter, &DC, &HeadOfAsData);
+                            if (directiveType < 0 && directiveType != -2)
+                            {
+                                printf("Error: in (line: %d, index: %d) Syntax error, after directive name. (expected: number,\"sum_text\").\n", lineNumber, index);
+                                ErrorJump
+                            }
+                            break;
+                        }
+                    }
+                }
             }
-            directiveType = isItDirective(ptr,*ptr);
-            if(isItDirective<=0)
-            {
-            	printf("Error: Syntax error, unknow directive name.\n");
-				ErrorJump
-            }
-             if(isItDirective<=3 && symbol_flag==1 )   //directive after symbol- how to set next symbol?
-             {
-            //symbol flag off?
-                 symbol_flag==0
-                     ;
-            symbolnode->arr[running_counter - 1] = '\0';
-            symbol_head = symbolnode;
-            printf("IC: %d LABEL: <%s> next is %s\n", symbolnode->value, symbolnode->arr, symbolnode->next->arr);
-               /*  switch(directiveType)
-				{
-					case 1: //adding data from the .data to the data list
-					directiveType = addData(input_node_head->arr, index, &DC, &Head_AsData);
-					if(directiveType < 0 && directiveType != -2)
-					{
-						printf("Error: in (line: %d, index: %d) Syntax error, after directive name. (expected: number,number..) note: all number must be between: -512:512 .\n",lineNumber,index);
-						ErrorJump
-					}					
-					break;
-					case 2://adding data from the .string to the data list
-					directiveType = addString(input_node_head->arr, index, &DC, &Head_AsData);
-					if(directiveType < 0 && directiveType != -2)
-					{
-						printf("Error: in (line: %d, index: %d) Syntax error, after directive name. (expected: \"sum_text\").\n",lineNumber,index);	
-						ErrorJump						
-					}					
-					break;
-					case 3:	//adding data from the .struct to the data list				
-					directiveType = addStruct(input_node_head->arr, index, &DC, &Head_AsData);
-					if(directiveType < 0 && directiveType != -2)
-					{
-						printf("Error: in (line: %d, index: %d) Syntax error, after directive name. (expected: number,\"sum_text\").\n",lineNumber,index);
-						ErrorJump
-					}					
-					break;
-				}*/
-             }
-            }
-            
 
 
 				}
         }
-        
         
 
 
