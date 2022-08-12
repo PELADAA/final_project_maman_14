@@ -1,8 +1,10 @@
 
 #include "first_scan.h"
-
+extern dataPointer Head_AsData;
+extern symbolPtr symbol_head;
 char buffer[100];
 static int indexNew = -1;
+
 
 char* getCommand(FILE* fp1)/*Input: pointer to file. Output: char[81] that in the end of comman: /0. Discounts: file is open for reading*/
 {
