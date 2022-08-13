@@ -27,6 +27,14 @@ typedef struct {
     unsigned int value : VALUE_SIZE;
 } arg_word;
 
+/* code structure in decimal numbers */
+typedef struct {
+    unsigned int opcode;
+    unsigned int src_operand_ref;
+    unsigned int dst_operand_ref;
+    unsigned int a_r_e;
+} int_structure;
+
 
 typedef struct {
     unsigned int decode : DECODE_SIZE;

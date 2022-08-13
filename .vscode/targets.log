@@ -5,9 +5,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Sun Aug  7 22:49:39 2022
+# Make data base, printed on Mon Aug  8 20:40:23 2022
 
 # Variables
 
@@ -214,7 +213,7 @@ exec2:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 22:49:01.2605272
+#  Last modified 2022-08-08 20:39:02.0832105
 #  File has been updated.
 #  Successfully updated.
 
@@ -245,7 +244,7 @@ dbg:
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 11):
-	gdb --args ./assembler test_input
+	gcc assembler.c assembler.h structs.h constants.h macro_deploy.c macro_deploy.h first_scan.h first_scan.c utils.c utils.h second_scan.h second_scan.c -g -o assembler ;gdb --args ./assembler test_input_noLabel
 
 # files hash-table stats:
 # Load=10/1024=1%, Rehash=0, Collisions=0/22=0%
@@ -261,6 +260,6 @@ dbg:
 # strcache performance: lookups = 52 / hit rate = 25%
 # hash-table stats:
 # Load=39/8192=0%, Rehash=0, Collisions=2/52=4%
-# Finished Make data base on Sun Aug  7 22:49:39 2022
+# Finished Make data base on Mon Aug  8 20:40:23 2022
 
  

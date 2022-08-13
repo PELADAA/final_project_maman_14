@@ -8,6 +8,9 @@
 int main(int argc, char** argv) {
     node_t* tmp;
     node_t* head = NULL;
+    node_t symbol_node;
+    node_t* node_tptr = &symbol_node;
+
     int i = 1;
     char temp_char = '0';
     char temp_str[LINE_MAX_LEN];
@@ -191,12 +194,17 @@ int main(int argc, char** argv) {
         printf("************************************\n");
         printf("\n");
         //printlist(head);
-        if (first_scan(head) == NULL) {
-            printf("No LABEL\n");
-            printf("what: %p\n", second_scan(head));
+
+        node_tptr = first_scan(head);
+        printf("symbol_node: %p\n", &symbol_node);
+
+        if (&symbol_node == NULL) {
+
+            printf("No LABEL: %p\n", second_scan(head));
         }
         else {
-            printf("LABEL exist\n");
+
+            printf("LABEL exist: %p\n", second_scan_with_symbols(head, &symbol_node));
             //printlist(first_scan(head));
         }
         head = NULL;

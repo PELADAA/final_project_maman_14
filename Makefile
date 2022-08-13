@@ -8,7 +8,7 @@ exec2:
 exec3: 
 	./assembler test_input_noLabel
 dbg:
-	gdb --args ./assembler test_input
+	gcc assembler.c assembler.h structs.h constants.h macro_deploy.c macro_deploy.h first_scan.h first_scan.c utils.c utils.h second_scan.h second_scan.c -g -o assembler ;gdb --args ./assembler test_input_noLabel
 clean: 
 	rm -rf assembler
 	rm -rf *.exe
