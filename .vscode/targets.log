@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Aug  8 20:40:23 2022
+# Make data base, printed on Sun Aug 14 21:24:20 2022
 
 # Variables
 
@@ -145,9 +145,9 @@ WSL_DISTRO_NAME = Ubuntu-18.04
 
 # Directories
 
-# . (device 2, inode 338614396982998304): 28 files, no impossibilities.
+# . (device 2, inode 338614396982998304): 29 files, no impossibilities.
 
-# 28 files, no impossibilities in 1 directories.
+# 29 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -213,7 +213,7 @@ exec2:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-08 20:39:02.0832105
+#  Last modified 2022-08-14 21:23:59.7811024
 #  File has been updated.
 #  Successfully updated.
 
@@ -244,7 +244,7 @@ dbg:
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 11):
-	gcc assembler.c assembler.h structs.h constants.h macro_deploy.c macro_deploy.h first_scan.h first_scan.c utils.c utils.h second_scan.h second_scan.c -g -o assembler ;gdb --args ./assembler test_input_noLabel
+	gcc assembler.c assembler.h structs.h constants.h macro_deploy.c macro_deploy.h first_scan.h first_scan.c utils.c utils.h second_scan.h second_scan.c -g -o assembler ;gdb --args ./assembler test_input
 
 # files hash-table stats:
 # Load=10/1024=1%, Rehash=0, Collisions=0/22=0%
@@ -254,12 +254,12 @@ dbg:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 39 / storage = 441 B / avg = 11 B
-# current buf: size = 8162 B / used = 441 B / count = 39 / avg = 11 B
+# strcache buffers: 1 (0) / strings = 40 / storage = 463 B / avg = 11 B
+# current buf: size = 8162 B / used = 463 B / count = 40 / avg = 11 B
 
-# strcache performance: lookups = 52 / hit rate = 25%
+# strcache performance: lookups = 53 / hit rate = 24%
 # hash-table stats:
-# Load=39/8192=0%, Rehash=0, Collisions=2/52=4%
-# Finished Make data base on Mon Aug  8 20:40:23 2022
+# Load=40/8192=0%, Rehash=0, Collisions=2/53=4%
+# Finished Make data base on Sun Aug 14 21:24:20 2022
 
  

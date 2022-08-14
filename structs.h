@@ -29,6 +29,7 @@ typedef struct {
 
 /* code structure in decimal numbers */
 typedef struct {
+    unsigned int adress;
     unsigned int opcode;
     unsigned int src_operand_ref;
     unsigned int dst_operand_ref;

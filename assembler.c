@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
     int macro_flag = 0;
     int macro_exist = 0;
     int macro_counter;
-    int counter = 1;
+    int counter = 100;
     int flag;
     int IC, DC;
 

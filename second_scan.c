@@ -97,11 +97,14 @@ node_t* second_scan(node_t* input_node_head) {
 node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_head) {
 
     node_t* temporary = input_node_head;
+    FILE* first_scan_output = fopen("first_scan_output.txt", "w");
     int_structure temp_structure;
     temp_structure.opcode = 0;
     temp_structure.src_operand_ref = 0;
     temp_structure.dst_operand_ref = 0;
     temp_structure.a_r_e = 0;
+    temp_structure.adress = 0;
+
     int input_index = 0, symbol_index = 0;
     int temp;
     while (temporary->next != NULL) {/* go to the last element*/
@@ -110,32 +113,39 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
     while (temporary->prev != NULL) { /* print backwards */
         // input_index = input_node_head->arr;
         // symbol_index = symbol_node_head->arr;
+        temp_structure.adress = temporary->value;
         if (input_index = isSymbol(temporary->arr, input_index) > 0) {
-            printf("Symbol found\n");
-            input_index = jumpSpace(temporary->arr, input_index);
-            if (isOrder(temporary->arr, input_index) > 0) {
-                printf("isOrder found\n");
-            }
+            printf("Symbol found index=%d\n", input_index);
+            //input_index = jumpSpace(temporary->arr, input_index);
+            //printf("index=%d\n", input_index);
+            // if (isOrder(temporary->arr, input_index) > 0) {
+            //     printf("*****isOrder found after symbol\n");
+            // }
 
         }
         if (isDirective(temporary->arr, input_index) > 0) {
-            printf("isDirective: %d found\n", isDirective(temporary->arr, input_index));
+            printf("isDirective: %s found\n", directives[isDirective(temporary->arr, input_index)]);
         }
         if (isNumber(temporary->arr, input_index) > 0) {
             printf("isNumber found\n");
         }
         if (isOrder(temporary->arr, input_index) > 0) {
-            printf("isOrder found %d\n", isOrder(temporary->arr, input_index));
+            printf("isOrder found <%s>\n", orders[isOrder(temporary->arr, input_index)]);
             temp_structure.opcode = isOrder(temporary->arr, input_index);
+            // if (isOrder(temporary->arr, input_index) == 1) {
+            //     printf("checking mov args");
+
+            // }
         }
         printf("%d - \t", temporary->value);
-        printf("%s\t", temporary->arr);
+        printf("%s", temporary->arr);
         temporary = temporary->prev;
         // printf("is directive? %d\n", isDirective(temporary->arr, 0));
         // printf("is number? %d\n", isNumber(temporary->arr, 0));
         // printf("isOrder? %d\n", isOrder(temporary->arr, 0));
         // printf("isSymbol? %d\n", isSymbol(temporary->arr, 0));
-        printf("OPCODE- %d, src op ref : %d, dst op ref: %d , ARE: %d\n", temp_structure.opcode, temp_structure.src_operand_ref, temp_structure.dst_operand_ref, temp_structure.a_r_e);
+
+        fprintf(first_scan_output, "%d: OPCODE- %d, src op ref : %d, dst op ref: %d , ARE: %d\n", temp_structure.adress, temp_structure.opcode, temp_structure.src_operand_ref, temp_structure.dst_operand_ref, temp_structure.a_r_e);
     }
 
 
