@@ -1,5 +1,5 @@
 
 [m1]
-inc K
-mov S1.2 ,r3
+ inc K
+ mov S1.2 ,r3
 END OF MACRO

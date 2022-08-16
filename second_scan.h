@@ -14,4 +14,6 @@ int isDirective(char* command, int from);
 int isOrder(char* command, int from);
 int isNumber(char* command, int from);
 
+char* scanner_ptr;
+
 

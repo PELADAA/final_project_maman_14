@@ -124,12 +124,22 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
 
         }*/
         //printf("arg test <%s>\n", orders[isOrder(temporary->arr, input_index)]);
-        if (isOrder(temporary->arr, input_index) >= 0) {
-            printf("isOrder found <%s>\n", orders[isOrder(temporary->arr, input_index)]);
-            temp_structure.opcode = isOrder(temporary->arr, input_index);
-            if (isOrder(temporary->arr, input_index) == 0) {
-                printf("checking mov args");
+
+        // if (isTextLeft(temporary->arr, input_index) == 1)
+        //     printf("text is left\n");
+        scanner_ptr = temporary->arr;
+        input_index = jumpSpace(scanner_ptr, input_index);
+
+        if (isOrder(scanner_ptr, input_index) >= 0) {
+            printf("isOrder found <%s>\n", orders[isOrder(scanner_ptr, input_index)]);
+            temp_structure.opcode = isOrder(scanner_ptr, input_index);
+            if (isOrder(scanner_ptr, input_index) == 0) {
+                scanner_ptr += (input_index + 3);
+                printf("checking mov args in: \n%s> input_index: %d\n", scanner_ptr, input_index);
                 //get 2 words
+
+                printf("first arg: <%s>\n", strtok(scanner_ptr, ","));
+                printf("next arg: <%s>\n", strtok(NULL, ","));
 
                 //check if words are: #number | register | extern | LABEL
 
