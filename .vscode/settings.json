@@ -39,6 +39,7 @@
     "constants.h": "c",
     "first_scan.h": "c",
     "stdio.h": "c",
-    "utils.h": "c"
+    "utils.h": "c",
+    "second_scan.h": "c"
   }
 }

@@ -104,6 +104,7 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
     temp_structure.dst_operand_ref = 0;
     temp_structure.a_r_e = 0;
     temp_structure.adress = 0;
+    scanner_ptr = NULL;
 
     int input_index = 0, symbol_index = 0;
     int temp;
@@ -111,6 +112,8 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
         temporary = temporary->next;
     }
     while (temporary->prev != NULL) { /* print backwards */
+        input_index = 0;
+
         // input_index = input_node_head->arr;
         // symbol_index = symbol_node_head->arr;
         temp_structure.adress = temporary->value;
@@ -135,6 +138,8 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
             temp_structure.opcode = isOrder(scanner_ptr, input_index);
             if (isOrder(scanner_ptr, input_index) == 0) {
                 scanner_ptr += (input_index + 3);
+                scanner_ptr += (jumpSpace(scanner_ptr, input_index) - 1);
+
                 printf("checking mov args in: \n%s> input_index: %d\n", scanner_ptr, input_index);
                 //get 2 words
 
