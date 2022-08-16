@@ -114,7 +114,7 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
         // input_index = input_node_head->arr;
         // symbol_index = symbol_node_head->arr;
         temp_structure.adress = temporary->value;
-        if (input_index = isSymbol(temporary->arr, input_index) > 0) {
+        /*if (input_index = isSymbol(temporary->arr, input_index) > 0) {
             printf("Symbol found index=%d\n", input_index);
             //input_index = jumpSpace(temporary->arr, input_index);
             //printf("index=%d\n", input_index);
@@ -122,6 +122,22 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
             //     printf("*****isOrder found after symbol\n");
             // }
 
+        }*/
+        //printf("arg test <%s>\n", orders[isOrder(temporary->arr, input_index)]);
+        if (isOrder(temporary->arr, input_index) >= 0) {
+            printf("isOrder found <%s>\n", orders[isOrder(temporary->arr, input_index)]);
+            temp_structure.opcode = isOrder(temporary->arr, input_index);
+            if (isOrder(temporary->arr, input_index) == 0) {
+                printf("checking mov args");
+                //get 2 words
+
+                //check if words are: #number | register | extern | LABEL
+
+                //set the ref type
+
+                //
+
+            }
         }
         if (isDirective(temporary->arr, input_index) > 0) {
             printf("isDirective: %s found\n", directives[isDirective(temporary->arr, input_index)]);
@@ -129,14 +145,7 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
         if (isNumber(temporary->arr, input_index) > 0) {
             printf("isNumber found\n");
         }
-        if (isOrder(temporary->arr, input_index) > 0) {
-            printf("isOrder found <%s>\n", orders[isOrder(temporary->arr, input_index)]);
-            temp_structure.opcode = isOrder(temporary->arr, input_index);
-            // if (isOrder(temporary->arr, input_index) == 1) {
-            //     printf("checking mov args");
 
-            // }
-        }
         printf("%d - \t", temporary->value);
         printf("%s", temporary->arr);
         temporary = temporary->prev;
