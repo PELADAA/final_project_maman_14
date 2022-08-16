@@ -1,154 +1,15 @@
 #include "first_scan.h"
 #include "macro_deploy.h"
+#include "AsData.c"
+#include "Symbols.cs"
+#include "directive.cs"
+#include "Actions.cs"
+#include "utils.c"
+#include "orders.cs"
+
 char symbolName[81];
 
-int isItDirective(char* input_node_head->arr, int  arrSpotCounter) {
-    int iterator = 1;
-    char directive[7];
-    int i;
-    if (command[arrSpotCounter] == '.') {
-        while ((input_node_head->arr[arrSpotCounter + iterator] != ' ') && (input_node_head->arr[ arrSpotCounter + iterator] != '\t') && (input_node_head->arr[arrSpotCounter + iterator] != '\0')) {
-            if (iterator >= 7)
-                return -1;
-            directive[iterator - 1] = input_node_head->arr[arrSpotCounter + iterator];
-            iterator++;
-        }
-        directive[iterator - 1] = '\0';
-        for (i = 0; i < 5; i++) {
-            if (strcmp(directive, directives[i]) == 0) {
-                return i + 1;
-            }
-        }
-        return -1;
 
-    }
-    return -1;
-}
-
-
-int SetNext(symbolPtr* head, char* command, char * symbolName, int adress, short type)
-{
-    ptSymbol pt;
-    if (*head)
-    {
-        pt = *head;
-        while (pt->next)
-        {
-            pt = pt->next;
-        }
-        pt->next = (ptSymbol)malloc(sizeof(nodeSymbol));
-        pt = pt->next;
-    }
-    else
-    {
-        *head = (ptSymbol)malloc(sizeof(nodeSymbol));
-        pt = *head;
-    }
-    if (pt && (pt->name = (char*)malloc((length + 1) * sizeof(char))))
-    {
-        pt->next = NULL;
-        pt->name = strncpy(pt->name, symbolName);
-        pt->name[length] = '\0';
-        pt->adress = adress;
-        pt->type = type;
-    }
-    else
-    {
-        return -2;
-    }
-    return 1;
-}
-
-
-int checkExist(node_t* head, char* name)//is it called ptSymbol inour project?
-{
-    while (head)
-    {
-        if (strcmp(head->name, name) == 0)
-            return 1;
-        head = head->next;
-    }
-    return 0;
-}
-
-ptSymbol GetIfExist(ptSymbol head, char* name)
-{
-    while (head)
-    {
-        if (strcmp(head->name, name) == 0)
-            return head;
-        head = head->next;
-    }
-    return NULL;
-}
-
-int isSYEmpty(ptSymbol head)
-{
-    return (head) ? 0 : 1;
-}
-
-ptSymbol getNextSY(ptSymbol* head)
-{
-    ptSymbol p;
-    if (!isSYEmpty(*head))
-    {
-        p = *head;
-        *head = (*head)->next;
-        return p;
-    }
-    return NULL;
-}
-
-void DeleteSymbols(ptSymbol* head)
-{
-    ptSymbol pt, next;
-    if (!isSYEmpty(*head))
-    {
-        pt = *head;
-        while (pt)
-        {
-            next = pt->next;
-            free(pt->name);
-            free(pt);
-            pt = next;
-        }
-        *head = NULL;
-    }
-}
-
-int addSymbols(ptSymbol* head, char* command, int from)
-{
-    int start, end, count = 0;
-    while (isTextLeft(command, from) && from >= 0)
-    {
-        start = jumpSpace(command, from);
-        end = endOfText(command, start);
-        if (end > -1)
-        {
-            if (SetNext(head, command, start, end - start, 0, 2) < 0)
-                return -2;
-            count++;
-            from = jumpBreak(command, end);
-            if ((from == -1 && isTextLeft(command, end)) || (from != -1 && !isTextLeft(command, from)))
-                return -3;
-        }
-        else
-        {
-            return -1;
-        }
-    }
-    return count;
-}
-
-void upgreadeSymbols(ptSymbol head, int IC)
-{
-    while (head)
-    {
-        if (head->type <= 1)
-            head->adress += IC;
-        head = head->next;
-    }
-}
 
 char symNameTmp[81];//symbol max size
 
@@ -156,9 +17,9 @@ dataPointer HeadOfAsData = NULL; // datapoiters defenition is in AsData.c
 
 node_t* first_scan(node_t* input_node_head) {
     int IC = 100;
-    int DC = 0;
-    int lineCounter =0;
-    int directiveType;
+    int DC = 0, L = 0;
+    int lineCounter = 0;
+    int directiveType, Nresult;
     int symbol_flag = 0;
     char* ptr;
     node_t* symbolnode;
@@ -174,175 +35,208 @@ node_t* first_scan(node_t* input_node_head) {
         //printf("IC: %d\n", IC);
         input_node_head = input_node_head->prev;
         ptr = input_node_head->arr;
-        int arrSpotCounter =0;
+        int arrSpotCounter = 0;
         lineCounter++;
-        if (strstr(ptr, ";") != NULL) {
-            //printf("comment found, ptr: %c\n", *ptr);
-            IC--;
-        }
-        else if (strstr(ptr, ":") != NULL) {
-            symbol_flag = 1;
-            ptr = input_node_head->arr;
-            char c = *ptr;
-            int running_counter;
-
-            for (running_counter = 0;c != LABEL_DELIM; running_counter++) {
-                //printf("%c", c);
-                c = (char)*(ptr++);
-                arrSpotCounter++;
-                symNameTmp[running_counter] = c;
-                if (c == SPACE)
-                    running_counter--;
+        char* TResult = NULL
+            if (strstr(ptr, ";") != NULL) {
+                //printf("comment found, ptr: %c\n", *ptr);
+                IC--;
             }
+            else if (strstr(ptr, ":") != NULL) {
+                symbol_flag = 1;
+                ptr = input_node_head->arr;
+                char c = *ptr;
+                int running_counter;
 
-            //checks if the label already excist  - if yes error
-            if(checkSymbolExist(symbol_head,symNameTmp))
-					{
-						printf("Error: Symbol already exist, and have been defined befor.\n");						
-						ErrorJump
-					}
-            else
-            {
-                if (running_counter > 30)
-                {
-                    printf(" Syntax error, Symbol name can't be longer than: 30.\n");
-                    //ErrorJump
+                for (running_counter = 0; c != LABEL_DELIM; running_counter++) {
+                    //printf("%c", c);
+                    c = (char)*(ptr++);
+                    arrSpotCounter++;
+                    symNameTmp[running_counter] = c;
+                    if (c == SPACE)
+                        running_counter--;
                 }
-                //check - if heres something after the symbol. 
-                //  check what error needs to be if its infinity loop 
-                while (input_node_head->arr[arrSpotCounter] == '\0' && isspace(input_node_head->arr[arrSpotCounter]))
-                {
-                        arrSpotCounter++;
-                }
-                if (input_node_head->arr[arrSpotCounter] == '\0')
-                {
-                    printf("Error: in (line: %d, index: %d) Syntax error, expected a method name or directive after symbol.\n");
-                    //ErrorJump
-                }
-                if (input_node_head->arr[arrSpotCounter] == '.')
-                {
+                symNameTmp[running_counter + 1] = '\0';
 
-                    directiveType = isItDirective(input_node_head->arr, arrSpotCounter);
-                    if (directiveType <= 0)
+                //checks if the label already excist  - if yes error
+                if (checkSymbolExist(symbol_head, symNameTmp))
+                {
+                    printf("Error: Symbol already exist, and have been defined befor.\n");
+                    ErrorJump
+                }
+                else
+                {
+                    if (running_counter > 30)
                     {
-                        printf("Error: Syntax error, unknow directive name.\n");
+                        printf(" Syntax error, Symbol name can't be longer than: 30.\n");
                         //ErrorJump
                     }
-
-                    if (directiveType <= 3)  //directive after symbol- how to set next symbol?
+                    //check - if heres something after the symbol. 
+                    //  check what error needs to be if its infinity loop 
+                    while (input_node_head->arr[arrSpotCounter] == '\0' && isspace(input_node_head->arr[arrSpotCounter]))
                     {
-                        if (symbol_flag == 1) {
+                        arrSpotCounter++;
+                    }
+                    if (input_node_head->arr[arrSpotCounter] == '\0')
+                    {
+                        printf("Error: in (line: %d, index: %d) Syntax error, expected a method name or directive after symbol.\n");
+                        //ErrorJump
+                    }
+                    if (input_node_head->arr[arrSpotCounter] == '.')
+                    {
 
-                            symbol_flag = 0;
-                            if (checkSymbolExist(symbol_head, symNameTmp)) {
-                                printf(" Symbol already exist, and have been defined befor.\n");
-                                //ErrorJump
-                            }
-                            if (directiveType == 3)
-                                directiveType = SetNext(&symbol_head, input_node_head->arr, symbolName, DC, 1);//1- for sruct.
-                            else
-                                directiveType = SetNext(&symbol_head, input_node_head->arr, symbolName, DC, 0);
-                            if (directiveType == -2)
-                            {
-                                printf("Dynamic alocation error, could not add Symbol.\n");
-                                //ErrorJump
-                            }
-
-                        }
-                        switch (directiveType)
+                        directiveType = isItDirective(input_node_head->arr, arrSpotCounter);
+                        if (directiveType <= 0)
                         {
-                        case 1: //adding data from the .data to the data list
-                            directiveType = addData(input_node_head->arr, arrSpotCounter, &DC, &HeadOfAsData);
-                            if (directiveType < 0 && directiveType != -2)
-                            {
-                                printf("Error: in (line: %d, index: %d) Syntax error, after directive name. (expected: number,number..) note: all number must be between: -512:512 .\n", lineNumber, index);
-                                ErrorJump
-                            }
-                            break;
-                        case 2://adding data from the .string to the data list
-                            directiveType = addString(input_node_head->arr, arrSpotCounter, &DC, &HeadOfAsData);
-                            if (directiveType < 0 && directiveType != -2)
-                            {
-                                printf("Error: in (line: %d, index: %d) Syntax error, after directive name. (expected: \"sum_text\").\n", lineNumber, index);
-                                ErrorJump
-                            }
-                            break;
-                        case 3:	//adding data from the .struct to the data list				
-                            directiveType = addStruct(input_node_head->arr, arrSpotCounter, &DC, &HeadOfAsData);
-                            if (directiveType < 0 && directiveType != -2)
-                            {
-                                printf("Error: in (line: %d, index: %d) Syntax error, after directive name. (expected: number,\"sum_text\").\n", lineNumber, index);
-                                ErrorJump
-                            }
-                            break;
-                        }
-                        if (directiveType == -2)
-                        {
-                            printf("Error: Dynamic alocation error, could not add data.\n");
+                            printf("Error: Syntax error, unknow directive name.\n");
                             //ErrorJump
                         }
-                        while ((input_node_head->arr[arrSpotCounter)]) != '\0' && isspace(input_node_head->arr[arrSpotCounter))){
-                        arrSpotCounter++; }
-                        if (input_node_head->arr[arrSpotCounter] != '\0')
+
+                        if (directiveType <= 3)  //directive after symbol- how to set next symbol?
                         {
-                            printf("Error: in (line: %d, index: %d) Syntax error, unexpected text after directive order.\n", lineNumber, directiveType);
-                            ErrorJump
-                        }
-                    }
-                    else 
-                    {
-                        if (symbol_flag == 1)
-                        {
-                            symbol_flag = 0;
-                            printf("Warning in (line: %d, index: %d) unexpected Symbol in this type of directive.\n", lineNumber, /*Sy_start*/);
-                        }
-                        if (directiveType == 5)
-                        {
-                            arrSpotCounter += 7;
+                            if (symbol_flag == 1) {
+
+                                symbol_flag = 0;
+                                if (checkSymbolExist(symbol_head, symNameTmp)) {
+                                    printf(" Symbol already exist, and have been defined befor.\n");
+                                    //ErrorJump
+                                }
+                                if (directiveType == 3)
+                                    directiveType = SetNext(&symbol_head, input_node_head->arr, symbolName, DC, 1);//1- for sruct.
+                                else
+                                    directiveType = SetNext(&symbol_head, input_node_head->arr, symbolName, DC, 0);
+                                if (directiveType == -2)
+                                {
+                                    printf("Dynamic alocation error, could not add Symbol.\n");
+                                    //ErrorJump
+                                }
+
+                            }
+                            switch (directiveType)
+                            {
+                            case 1: //adding data from the .data to the data list
+                                directiveType = addData(input_node_head->arr, arrSpotCounter, &DC, &HeadOfAsData);
+                                if (directiveType < 0 && directiveType != -2)
+                                {
+                                    printf("Error: in (line: %d, index: %d) Syntax error, after directive name. (expected: number,number..) note: all number must be between: -512:512 .\n", lineNumber, index);
+                                    ErrorJump
+                                }
+                                break;
+                            case 2://adding data from the .string to the data list
+                                directiveType = addString(input_node_head->arr, arrSpotCounter, &DC, &HeadOfAsData);
+                                if (directiveType < 0 && directiveType != -2)
+                                {
+                                    printf("Error: in (line: %d, index: %d) Syntax error, after directive name. (expected: \"sum_text\").\n", lineNumber, index);
+                                    ErrorJump
+                                }
+                                break;
+                            case 3:	//adding data from the .struct to the data list				
+                                directiveType = addStruct(input_node_head->arr, arrSpotCounter, &DC, &HeadOfAsData);
+                                if (directiveType < 0 && directiveType != -2)
+                                {
+                                    printf("Error: in (line: %d, index: %d) Syntax error, after directive name. (expected: number,\"sum_text\").\n", lineNumber, index);
+                                    ErrorJump
+                                }
+                                break;
+                            }
+                            if (directiveType == -2)
+                            {
+                                printf("Error: Dynamic alocation error, could not add data.\n");
+                                //ErrorJump
+                            }
                             while ((input_node_head->arr[arrSpotCounter)]) != '\0' && isspace(input_node_head->arr[arrSpotCounter))){
                             arrSpotCounter++; }
                             if (input_node_head->arr[arrSpotCounter] != '\0')
                             {
-                                //replace jump space
-                                arrSpotCounter = jumpSpace(input_node_head->arr, arrSpotCounter);
-                                //understand what is addSymbols
-                                directiveType = addSymbols(&symbol_head, input_node_head->arr, arrSpotCounter);
-                                if (directiveType < 0)
-                                {
-                                    switch (directiveType)
-                                    {
-                                    case -2:
-                                        printf("Error: in (line: %d, index: %d) Dynamic alocation error, could not add Symbol.\n", lineNumber,/*Sy_start*/);
-                                        ErrorJump
-                                            break;
-                                    case -3:
-                                        printf("Error: in (line: %d, index: %d) Syntax error, unexpected text after adding symbols.\n", lineNumber, arrSpotCounter);
-                                        ErrorJump
-                                            break;
-                                    default:
-                                        printf("Error: in (line: %d, index: %d) Syntax error, expected symbol name.\n", lineNumber, arrSpotCounter);
-                                        ErrorJump
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                printf("Error: in (line: %d, index: %d) expected symbol name afted directive: extern.\n", lineNumber, /*Sy_start*/);
+                                printf("Error: in (line: %d, index: %d) Syntax error, unexpected text after directive order.\n", lineNumber, directiveType);
                                 ErrorJump
                             }
                         }
-                    }
-                    //do i need to do it with input_node_head->arr?
-                    /*free(command);*/
-                    continue;
+                        else
+                        {
+                            if (symbol_flag == 1)
+                            {
+                                symbol_flag = 0;
+                                printf("Warning in (line: %d, index: %d) unexpected Symbol in this type of directive.\n", lineNumber, /*Sy_start*/);
+                            }
+                            if (directiveType == 5)
+                            {
+                                arrSpotCounter += 7;
+                                while ((input_node_head->arr[arrSpotCounter)]) == '\0' && isspace(input_node_head->arr[arrSpotCounter))){
+                                arrSpotCounter++; }
+                                if (input_node_head->arr[arrSpotCounter] != '\0')
+                                {
+                                    //replace jump space
+                                    arrSpotCounter = jumpSpace(input_node_head->arr, arrSpotCounter);
+                                    //understand what is addSymbols
+                                    directiveType = addSymbols(&symbol_head, input_node_head->arr, arrSpotCounter);
+                                    if (directiveType < 0)
+                                    {
+                                        switch (directiveType)
+                                        {
+                                        case -2:
+                                            printf("Error: in (line: %d, index: %d) Dynamic alocation error, could not add Symbol.\n", lineNumber,/*Sy_start*/);
+                                            ErrorJump
+                                                break;
+                                        case -3:
+                                            printf("Error: in (line: %d, index: %d) Syntax error, unexpected text after adding symbols.\n", lineNumber, arrSpotCounter);
+                                            ErrorJump
+                                                break;
+                                        default:
+                                            printf("Error: in (line: %d, index: %d) Syntax error, expected symbol name.\n", lineNumber, arrSpotCounter);
+                                            ErrorJump
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    printf("Error: in (line: %d, index: %d) expected symbol name afted directive: extern.\n", lineNumber, /*Sy_start*/);
+                                    ErrorJump
+                                }
+                            }
+                        }
+                        
+                        continue;
                     }
                 }
+                if (symbol_flag == 1)
+                {
+                    symbol_flag = 0;
+                    if (checkSymbolExist(symbol_head, symNameTmp)
+                    {
+                        printf("Error/ in (line: %d, index: %d) Syntax error, Symbol already exist, and have been defined befor.\n", lineNumber, Sy_start);
+                            //ErrorJump
+                    }
+                    //directiveType now it has other input than directive
+                    directiveType = SetNext(&symbol_head, input_node_head->arr, symbolName, IC, 3);/*3- for code Symbol.*/
+                        if (directiveType == -2)
+                        {
+                            printf("Error: in (line: %d, index: %d) Dynamic alocation error, could not add Symbol.\n", lineNumber, Sy_start);
+                                //ErrorJump
+                        }
+                }
+                //directiveType now it has other input than directive
+                directiveType = isItOrder(input_node_head->arr, arrSpotCounter);
+                if (directiveType < 0)
+                {
+                    printf("Error: in (line: %d, index: %d) Syntax error, unknow order name.\n", lineNumber, index);
+                    //ErrorJump
+                }
+                TResult = countActionList(directiveType, &L, input_node_head->arr, arrSpotCounter);
+                if (TResult != NULL && TResult[0] == '`')
+                {
+                    printf("Error: in (line: %d, index: %d) %s.\n", lineCounter, arrSpotCounter, (TResult + 1));
+                    //ErrorJump
+                }
+                
+                IC += L;
+                
             }
+        //what this line does?
+        upgreadeSymbol(symbol_head, IC);
+    }
 
-
-				}
-        }
-        
+}
 
 
         //printf("ptr location is: %s\n", ptr);
