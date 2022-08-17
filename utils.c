@@ -95,31 +95,36 @@ int endOfText(char* command, int from)/*Input: pointer to arry, and starting poi
 char* clean_word(char* input_str) {
 
     char* c;
+
     int i = 0;
 
     int j = 0;
-    //*c = SPACE;
+
     //*c = input_str[i];
     //strcpy(operand_str, input_str);
     c = input_str;
+    *c = input_str[i];
+    //*c = (char)input_str;
     //char* str_ptr = operand_str;
 
     while (*c == SPACE) {
-        *c = (input_str[i++]);
+        *c = (input_str[++i]);
     }
 
+    //printf("++++ char is %c\n", *c);
     while (isalnum(*c) || *c == '#' || *c == '-' || *c == ',' || *c == SPACE || *c == '.') {
         if (*c == SPACE) {
             *c = (input_str[++i]);
             continue;
         }
+        //printf("++++ char is %c\n", *c);
 
-        operand_str[j] = input_str[i];
+        operand_str[j] = *c;
         //printf("operand_str[j]: %c input_str[i]: %c\n", operand_str[j], input_str[i]);
 
         *c = (input_str[++i]);
         j++;
-        if (j > 10 || i > 10)
+        if (j > 80 || i > 80)
             break;
     }
     operand_str[j] = '\0';

@@ -106,6 +106,10 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
     temp_structure.a_r_e = 0;
     temp_structure.adress = 0;
     scanner_ptr = NULL;
+    char first_operand[10];
+    char second_operand[10];
+    char* first_operand_ptr = first_operand;
+    char* second_operand_ptr = second_operand;
 
     int input_index = 0, symbol_index = 0;
     int temp;
@@ -141,18 +145,29 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
                 scanner_ptr += (input_index + 3);
                 scanner_ptr += (jumpSpace(scanner_ptr, input_index) - 1);
 
-                printf("checking mov args in: \n%s input_index: %d\n******\n", scanner_ptr, input_index);
+                //printf("checking mov args in: \n%s input_index: %d\n******\n", scanner_ptr, input_index);
                 //get 2 words
 
                 //operand = strtok(scanner_ptr, ",");
                 //strcpy(operand, strtok(scanner_ptr, ","));
-                if (scanner_ptr != NULL)
-                    //printf("is number arg: <%d> in <%s>\n", isNumber(scanner_ptr, 0), clean_word(scanner_ptr));
-                    printf("first operand: <%s>\n", strtok(clean_word(scanner_ptr), ","));
-                printf("second operand: <%s>\n", strtok(NULL, ","));
+
+                printf("first operand: <%s>\n", first_operand_ptr = strtok(clean_word(scanner_ptr), ","));
+                printf("second operand: <%s>\n", second_operand_ptr = strtok(NULL, ","));
 
                 //check if words are: #number | register | extern | LABEL
+                if (first_operand_ptr != NULL)
+                    if ((char)*first_operand_ptr == '#')
+                        printf("looks like a number!\n");
+                if (first_operand_ptr != NULL)
+                    if ((char)*first_operand_ptr == 'r')
+                        printf("looks like a register!\n");
 
+                if (second_operand_ptr != NULL)
+                    if ((char)*second_operand_ptr == '#')
+                        printf("looks like a number!\n");
+                if (second_operand_ptr != NULL)
+                    if ((char)*second_operand_ptr == 'r')
+                        printf("looks like a register!\n");
                 //set the ref type
 
                 //
