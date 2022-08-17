@@ -1,6 +1,7 @@
 
 #include "second_scan.h"
 
+
 char* directives[5] = { "data\0","string\0","struct\0","entry\0","extern\0" };
 char* orders[16] = { "mov\0","cmp\0","add\0","sub\0","not\0","clr\0","lea\0","inc\0","dec\0","jmp\0","bne\0","red\0","prn\0","jsr\0","rts\0","stop\0" };
 
@@ -133,18 +134,22 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
         scanner_ptr = temporary->arr;
         input_index = jumpSpace(scanner_ptr, input_index);
 
-        if (isOrder(scanner_ptr, input_index) >= 0) {
+        if (isOrder(scanner_ptr, input_index) >= 0) {//TODO switch case, and clean multible use of "isOrder"
             printf("isOrder found <%s>\n", orders[isOrder(scanner_ptr, input_index)]);
             temp_structure.opcode = isOrder(scanner_ptr, input_index);
             if (isOrder(scanner_ptr, input_index) == 0) {
                 scanner_ptr += (input_index + 3);
                 scanner_ptr += (jumpSpace(scanner_ptr, input_index) - 1);
 
-                printf("checking mov args in: \n%s> input_index: %d\n", scanner_ptr, input_index);
+                printf("checking mov args in: \n%s input_index: %d\n******\n", scanner_ptr, input_index);
                 //get 2 words
 
-                printf("first arg: <%s>\n", strtok(scanner_ptr, ","));
-                printf("next arg: <%s>\n", strtok(NULL, ","));
+                //operand = strtok(scanner_ptr, ",");
+                //strcpy(operand, strtok(scanner_ptr, ","));
+                if (scanner_ptr != NULL)
+                    //printf("is number arg: <%d> in <%s>\n", isNumber(scanner_ptr, 0), clean_word(scanner_ptr));
+                    printf("first operand: <%s>\n", strtok(clean_word(scanner_ptr), ","));
+                printf("second operand: <%s>\n", strtok(NULL, ","));
 
                 //check if words are: #number | register | extern | LABEL
 

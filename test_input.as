@@ -13,7 +13,7 @@ prn #-5
 sub r1, r4
 m1
 bne LOOP
- mov #-5 ,r3
+mov #-5 ,r3
  mov #-5 ,r3
 END: hlt
 .extern LOOP

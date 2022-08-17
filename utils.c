@@ -91,3 +91,37 @@ int endOfText(char* command, int from)/*Input: pointer to arry, and starting poi
         from++;
     return from;
 }
+
+char* clean_word(char* input_str) {
+
+    char* c;
+    int i = 0;
+
+    int j = 0;
+    //*c = SPACE;
+    //*c = input_str[i];
+    //strcpy(operand_str, input_str);
+    c = input_str;
+    //char* str_ptr = operand_str;
+
+    while (*c == SPACE) {
+        *c = (input_str[i++]);
+    }
+
+    while (isalnum(*c) || *c == '#' || *c == '-' || *c == ',' || *c == SPACE || *c == '.') {
+        if (*c == SPACE) {
+            *c = (input_str[++i]);
+            continue;
+        }
+
+        operand_str[j] = input_str[i];
+        //printf("operand_str[j]: %c input_str[i]: %c\n", operand_str[j], input_str[i]);
+
+        *c = (input_str[++i]);
+        j++;
+        if (j > 10 || i > 10)
+            break;
+    }
+    operand_str[j] = '\0';
+    return operand_str;
+}
