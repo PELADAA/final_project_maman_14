@@ -6,15 +6,15 @@ MAIN: mov S1.1 ,LENGTH
  LOOP: jmp END
  macro m1
  inc K
- mov S1.2 ,r3
+ mov S1.2 ,#3
  endmacro
- mov r1 ,r3
+ mov r1 ,S1.2
 prn #-5
 sub r1, r4
 m1
 bne LOOP
 mov K ,r3
- mov #-5 ,r3
+ mov #-5 ,K
 END: hlt
 .extern LOOP
 STR: .string "abcdef"

@@ -125,7 +125,8 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
     }
     while (temporary->prev != NULL) { /* print backwards */
         input_index = 0;
-
+        temp_structure.dst_operand_ref = 0;
+        temp_structure.src_operand_ref = 0;
         // input_index = input_node_head->arr;
         // symbol_index = symbol_node_head->arr;
         temp_structure.adress = temporary->value;
@@ -163,7 +164,7 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
                 printf("second operand: <%s>\n", second_operand_ptr = strtok(NULL, ","));
 
                 //check if words are: #number | register | struct | LABEL
-                //temp_structure.src_operand_ref = 0;
+                temp_structure.src_operand_ref = 0;
                 if (first_operand_ptr != NULL) {
                     if ((char)*first_operand_ptr == '#') {
                         printf("looks like a number!\n");
@@ -194,12 +195,36 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
                     }
                 }
                 // second_operand
-                if (second_operand_ptr != NULL)
-                    if ((char)*second_operand_ptr == '#')
+
+                if (second_operand_ptr != NULL) {
+                    if ((char)*second_operand_ptr == '#') {
                         printf("looks like a number!\n");
-                if (second_operand_ptr != NULL)
-                    if ((char)*second_operand_ptr == 'r')
-                        printf("looks like a register!\n");
+                        temp_structure.dst_operand_ref = 0;
+                    }
+
+                    else if ((char)*second_operand_ptr == 'r') {
+                        printf("looks like a register! <%s> is %d\n", second_operand_ptr, temp_structure.src_operand_ref);
+                        temp_structure.dst_operand_ref = 3;
+                    }
+                    else if (strstr(second_operand_ptr, ".") != NULL) {
+                        printf("looks like a struct! <%s> is %d\n", second_operand_ptr, temp_structure.src_operand_ref);
+                        temp_structure.dst_operand_ref = 2;
+                    }
+                    //printlist(symbol_node_head);
+                    else {
+                        //printf("looks like a LABEL? <%s>\n", first_operand_ptr);
+
+                        while (temporary_symbol_node != NULL) {
+                            //printf("symbol: %s operand %s\n", temporary_symbol_node->arr, first_operand_ptr);
+                            if (strcmp(second_operand_ptr, temporary_symbol_node->arr) == 0) {
+                                printf("Looks like a LABEL! <%s>\n", second_operand_ptr);
+                                temp_structure.dst_operand_ref = 1;
+                            }
+                            temporary_symbol_node = temporary_symbol_node->next;
+                        }
+                        temporary_symbol_node = symbol_node_head;
+                    }
+                }
                 //set the ref type
 
                 //
