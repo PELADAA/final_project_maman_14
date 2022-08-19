@@ -204,8 +204,8 @@ int main(int argc, char** argv) {
         }
         else {
 
-            printf("LABEL exist: %p\n", second_scan_with_symbols(head, &symbol_node));
-            //printlist(first_scan(head));
+            printf("LABEL exist: %p\n", second_scan_with_symbols(head, node_tptr));
+            //printlist(node_tptr);
         }
         head = NULL;
         printf("\n");

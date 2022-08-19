@@ -1,5 +1,6 @@
 
 #include "second_scan.h"
+#include "macro_deploy.h"
 
 
 char* directives[5] = { "data\0","string\0","struct\0","entry\0","extern\0" };
@@ -90,7 +91,7 @@ node_t* second_scan(node_t* input_node_head) {
     }
 
 
-    printf("\n");
+    printf("\n symbol table is null\n");
 
     return NULL;
 }
@@ -98,6 +99,7 @@ node_t* second_scan(node_t* input_node_head) {
 node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_head) {
 
     node_t* temporary = input_node_head;
+    node_t* temporary_symbol_node = symbol_node_head;
     FILE* first_scan_output = fopen("first_scan_output.txt", "w");
     int_structure temp_structure;
     temp_structure.opcode = 0;
@@ -108,11 +110,16 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
     scanner_ptr = NULL;
     char first_operand[10];
     char second_operand[10];
+    char order_found[10];
     char* first_operand_ptr = first_operand;
     char* second_operand_ptr = second_operand;
 
+
     int input_index = 0, symbol_index = 0;
     int temp;
+    printf("printing? <%p>\n", temporary_symbol_node);
+    printf("printing? <%s>\n", temporary_symbol_node->arr);
+    printlist(temporary_symbol_node);
     while (temporary->next != NULL) {/* go to the last element*/
         temporary = temporary->next;
     }
@@ -139,7 +146,8 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
         input_index = jumpSpace(scanner_ptr, input_index);
 
         if (isOrder(scanner_ptr, input_index) >= 0) {//TODO switch case, and clean multible use of "isOrder"
-            printf("isOrder found <%s>\n", orders[isOrder(scanner_ptr, input_index)]);
+            strcpy(order_found, orders[isOrder(scanner_ptr, input_index)]);
+            printf("isOrder found <%s>\n", order_found);
             temp_structure.opcode = isOrder(scanner_ptr, input_index);
             if (isOrder(scanner_ptr, input_index) == 0) {
                 scanner_ptr += (input_index + 3);
@@ -154,14 +162,38 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
                 printf("first operand: <%s>\n", first_operand_ptr = strtok(clean_word(scanner_ptr), ","));
                 printf("second operand: <%s>\n", second_operand_ptr = strtok(NULL, ","));
 
-                //check if words are: #number | register | extern | LABEL
-                if (first_operand_ptr != NULL)
-                    if ((char)*first_operand_ptr == '#')
+                //check if words are: #number | register | struct | LABEL
+                //temp_structure.src_operand_ref = 0;
+                if (first_operand_ptr != NULL) {
+                    if ((char)*first_operand_ptr == '#') {
                         printf("looks like a number!\n");
-                if (first_operand_ptr != NULL)
-                    if ((char)*first_operand_ptr == 'r')
-                        printf("looks like a register!\n");
+                        temp_structure.src_operand_ref = 0;
+                    }
 
+                    else if ((char)*first_operand_ptr == 'r') {
+                        printf("looks like a register! <%s> is %d\n", first_operand_ptr, temp_structure.src_operand_ref);
+                        temp_structure.src_operand_ref = 3;
+                    }
+                    else if (strstr(first_operand_ptr, ".") != NULL) {
+                        printf("looks like a struct! <%s> is %d\n", first_operand_ptr, temp_structure.src_operand_ref);
+                        temp_structure.src_operand_ref = 2;
+                    }
+                    //printlist(symbol_node_head);
+                    else {
+                        //printf("looks like a LABEL? <%s>\n", first_operand_ptr);
+
+                        while (temporary_symbol_node != NULL) {
+                            //printf("symbol: %s operand %s\n", temporary_symbol_node->arr, first_operand_ptr);
+                            if (strcmp(first_operand_ptr, temporary_symbol_node->arr) == 0) {
+                                printf("Looks like a LABEL! <%s>\n", first_operand_ptr);
+                                temp_structure.src_operand_ref = 1;
+                            }
+                            temporary_symbol_node = temporary_symbol_node->next;
+                        }
+                        temporary_symbol_node = symbol_node_head;
+                    }
+                }
+                // second_operand
                 if (second_operand_ptr != NULL)
                     if ((char)*second_operand_ptr == '#')
                         printf("looks like a number!\n");
@@ -174,7 +206,7 @@ node_t* second_scan_with_symbols(node_t* input_node_head, node_t* symbol_node_he
 
             }
         }
-        if (isDirective(temporary->arr, input_index) > 0) {
+        if (isDirective(temporary->arr, input_index) >= 0) {
             printf("isDirective: %s found\n", directives[isDirective(temporary->arr, input_index)]);
         }
         if (isNumber(temporary->arr, input_index) > 0) {

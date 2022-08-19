@@ -236,7 +236,7 @@ node_t* first_scan(node_t* input_node_head) {
 
 
     if (symbol_flag == 1) {
-        printlist(symbol_head);
+        //printlist(symbol_head);
         printf("head is  null? %p\n", symbol_head);
         return symbol_head;
     }

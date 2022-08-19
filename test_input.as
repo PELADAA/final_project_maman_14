@@ -8,12 +8,12 @@ MAIN: mov S1.1 ,LENGTH
  inc K
  mov S1.2 ,r3
  endmacro
- mov S1.2 ,r3
+ mov r1 ,r3
 prn #-5
 sub r1, r4
 m1
 bne LOOP
-mov #-5 ,r3
+mov K ,r3
  mov #-5 ,r3
 END: hlt
 .extern LOOP
